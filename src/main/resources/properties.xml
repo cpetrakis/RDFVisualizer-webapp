@@ -1,0 +1,21 @@
+<xproperties>
+    <virtuoso_host>vhost</virtuoso_host>
+    
+   <!-- ********Start: General Descriptors for ALL****************** -->
+    <preference>
+        <type_uri>http://erlangen-crm.org/current/E1_CRM_Entity</type_uri>
+    <weighted_property>
+            <property_uri>http://erlangen-crm.org/current/P1_is_identified_by</property_uri>
+            <property_weight>110</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://erlangen-crm.org/current/P2_has_type</property_uri>
+            <property_weight>120</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://erlangen-crm.org/current/P3_has_note</property_uri>
+            <property_weight>130</property_weight>
+    </weighted_property>
+    </preference>
+    <!-- ********End: General Descriptors for ALL****************** --> 
+</xproperties>

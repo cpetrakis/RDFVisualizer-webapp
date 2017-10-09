@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <display-name>RDF Visualizer</display-name>
+    <servlet>
+        <servlet-name>GetData</servlet-name>
+        <servlet-class>gr.ics.forth.rdfvisualizer.webapp.GetData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PredicatesPriority</servlet-name>
+        <servlet-class>gr.ics.forth.rdfvisualizer.webapp.PredicatesPriority</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProperties</servlet-name>
+        <servlet-class>gr.ics.forth.rdfvisualizer.webapp.UpdateProperties</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DownloadFileServlet</servlet-name>
+        <servlet-class>gr.ics.forth.rdfvisualizer.webapp.DownloadFileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetPropertiesValues</servlet-name>
+        <servlet-class>gr.ics.forth.rdfvisualizer.webapp.GetPropertiesValues</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetData</servlet-name>
+        <url-pattern>/GetData</url-pattern>
+    </servlet-mapping>
+    <context-param>
+        <param-name>property.name</param-name>
+        <param-value>${property.name}</param-value>
+    </context-param>
+    <servlet-mapping>
+        <servlet-name>PredicatesPriority</servlet-name>
+        <url-pattern>/PredicatesPriority</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProperties</servlet-name>
+        <url-pattern>/UpdateProperties</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadFileServlet</servlet-name>
+        <url-pattern>/DownloadFileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetPropertiesValues</servlet-name>
+        <url-pattern>/GetPropertiesValues</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
