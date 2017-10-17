@@ -32,12 +32,19 @@ which is found in [RDF-Visualizer-webapp/src/webbapp/WEB- INF/classes/config.pro
 First of all, the tool can read and visualize data from virtuoso database, from blazegraph database or direct from .ttl files. User can define this source location by editing the ‘database’ property value as below
 
 ```properties
+
 # database value can be 'file' 'virtuoso' or 'blazegraph'
+
 # 'file' reads direct from file
 # 'virtuoso' reads from a virtuoso endpoint
 # 'blazegraph' reads from a blazegraph endpoint
+
 database = virtuoso
+
 ```
+
+#### Virtuoso Case ####
+
 
 
 
