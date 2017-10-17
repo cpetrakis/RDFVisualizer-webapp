@@ -163,30 +163,30 @@ Properties order configuration
 <!-- *********************************************************** -->
     <preference>
         <type_uri>
-SUBJECT TYPE URI
-Defines which subject’s type properties order will to be configured
-[e.g. http://www.cidoc-crm.org/cidoc-crm/E22_Man-Made_Object]
-</type_uri>
+        SUBJECT TYPE URI
+    Defines which subject’s type properties order will to be configured
+        [e.g. http://www.cidoc-crm.org/cidoc-crm/E22_Man-Made_Object]
+        </type_uri>
     <weighted_property>
          <property_uri>
-PROPERTY URI
-Defines which property is going to be configured.
-        [e.g. http://www.cidoc-crm.org/cidoc-crm/P2_has_type]
-  </property_uri>
-         <property_weight>
-PROPERTY WEIGHT
-Defines the priority of the above property.
-The smaller given weight, the higher priority we have in visualization.
-[e.g. 110]
+         PROPERTY URI
+    Defines which property is going to be configured.
+       [e.g. http://www.cidoc-crm.org/cidoc-crm/P2_has_type]
+        </property_uri>
+        <property_weight>
+        PROPERTY WEIGHT
+    Defines the priority of the above property.
+    The smaller given weight, the higher priority we have in visualization.
+        [e.g. 110]
         </property_weight>
     </weighted_property>
     <weighted_property>
         <property_uri>
-[e.g. http://www.cidoc-crm.org/cidoc-crm/P102_has_title]
+        [e.g. http://www.cidoc-crm.org/cidoc-crm/P102_has_title]
         </property_uri>
         <property_weight>
-[e.g. 130]
-</property_weight>
+        [e.g. 130]
+        </property_weight>
     </weighted_property>
     </preference>
 <xproperties>
@@ -224,7 +224,11 @@ e.g. http://localhost:8084/RDFVisualizer/?resource=http://www.mybuildingsample.c
 
 Further documentation about the tool functionalities you can find here
 
+### 5. Contact ###
 
+Petrakis Kostas < cpetrakis@ics.forth.gr >
+
+### 6. License ###
 
 
 
