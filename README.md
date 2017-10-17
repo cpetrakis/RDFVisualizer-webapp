@@ -24,7 +24,7 @@ After deployment you will be able to access the following screen in address: [UR
 
 Below you can see the first screen of the tool.
 
-![Alt text](/src/main/webapp/img/firstscreen.png?raw=true "Optional Title")
+![Alt text](/src/main/webapp/img/firstscreen.png?raw=true "First Screen")
 
 
 ### 3. Configuration ###
@@ -208,11 +208,11 @@ After the tool is online with all configuration done right, you can visualize yo
 
 Either you can paste the uri you want to visualize in the form below and press enter.
 
-IMAGE
+![Alt text](/src/main/webapp/img/secondscreen.png?raw=true "Insert subject screen")
 
 After that you can see a tree with incoming and outgoing links of this subject uri like the screen below:
 
-IMAGE
+![Alt text](/src/main/webapp/img/thirdscreen.png?raw=true "Final Screen")
 
 The other way to use the tool is to pass the preferred subject uri as a parameter by creating and calling urls like:
 
