@@ -24,6 +24,8 @@ After deployment you will be able to access the following screen in address: [UR
 
 Below you can see the first screen of the tool.
 
+![Alt text](/src/main/webapp/img/firstscreen.png?raw=true "Optional Title")
+
 
 ### 3. Configuration ###
 
