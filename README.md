@@ -74,7 +74,7 @@ If property ‘database’ has value ‘blazegraph’ then following values must
 ############################ BLAZEGRAPH ################################
 # in case of 'blazegraph' insert values else leave blank
 
-blazegraph_url= blazegraph url [e.g. http://localhost:9999/blazegraph]
+blazegraph_url = blazegraph url [e.g. http://localhost:9999/blazegraph]
 
 ```
 
@@ -92,14 +92,14 @@ If property ‘database’ has value ‘file’ then following values must be fi
 # WARNING: if we want dynamically give the filename as parameter to the
 # RDF Visualizer from another system we leave the property value blank !
 
-filename=
+filename =
 
 # default_folder value defines the path of default server folder in which
 # the rdf files are saved.
 # If the database property value is ‘file’ we must fill this property value 
 # in order the RDF Visualizer to find and visualize the files.
 
-default_folder= [e.g. C:\\Users\\User\\Desktop\\My_Folder]
+default_folder = [e.g. C:\\Users\\User\\Desktop\\My_Folder]
 
 ```
 
@@ -115,13 +115,13 @@ User can configure other parameters in the visualization of a subject uri as des
 # To do that, properties.xml file location (properties_xml property value)
 # must be defined below.
 
-priorities_xml= [e.g. C:\\RDFVisualizer\\main\\resources\\properties.xml]
+priorities_xml = [e.g. C:\\RDFVisualizer\\main\\resources\\properties.xml]
 
 # tree depth
 # WARNING: the value MUST be 0 in current version
 # defines the preopened depth of every node in the tree
 
-tree_depth=0
+tree_depth = 0
 
 # Images
 # The tool handles as images the typical image file types (jpeg, gif & png) 
@@ -144,7 +144,7 @@ type_Label_uri = [e.g. http://www.w3.org/1999/02/22-rdf-syntax-ns#type ]
 
 # does not show children with rdf-schema#label properties
 
-schema_Label_uri= [e.g. http://www.w3.org/2000/01/rdf-schema#label ]
+schema_Label_uri = [e.g. http://www.w3.org/2000/01/rdf-schema#label ]
 
 ##########################################################################
 
