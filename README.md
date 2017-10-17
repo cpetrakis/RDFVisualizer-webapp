@@ -31,7 +31,10 @@ Below you can see the first screen of the tool.
 
 You may configure the tool providing your preferences in configuration file (config.properties) 
 which is found in [RDF-Visualizer-webapp/src/webbapp/WEB- INF/classes/config.properties].
-First of all, the tool can read and visualize data from virtuoso database, from blazegraph database or direct from .ttl files. User can define this source location by editing the ‘database’ property value as below
+
+First of all, the tool can read and visualize data from virtuoso database, from blazegraph database or direct from .ttl files. 
+
+User can define this source location by editing the ‘database’ property value as below:
 
 ```properties
 
