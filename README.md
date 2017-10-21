@@ -233,7 +233,5 @@ Further documentation about the tool functionalities you can find here
 
 Petrakis Kostas < cpetrakis@ics.forth.gr >
 
-### 6. License ###
-
 
 
