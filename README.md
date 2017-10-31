@@ -132,8 +132,8 @@ image_type_uri = [e.g. http://www.cidoc-crm.org/cidoc-crm/E38_Image]
 
 # define which prefixes will be replaced with with "*/"
 
-prefix = [e.g. http://collection.britishmuseum.org/ ] 
-imgprefix = [e.g. http://www.britishmuseum.org/collectionimages/ ]
+prefix = [e.g. http://collection.prefix.org/ ] 
+imgprefix = [e.g. http://www.imageprefix.org/collectionimages/ ]
 
 # does not show children with core-prefLabel properties
 
@@ -152,7 +152,7 @@ schema_Label_uri = [e.g. http://www.w3.org/2000/01/rdf-schema#label ]
 # Exclude properties uris from inverse properties 
 # the given uris does not shown in the tree
 
-exclude_inverse = [e.g.http://erlangen-crm.org/current/P45_consists_of , http://www.cidoc-crm.org/cidoc-crm/P42_assigned]
+exclude_inverse = [e.g.http://cidoc-crm.org/current/P45_consists_of , http://www.cidoc-crm.org/cidoc-crm/P42_assigned]
 
 ```
 
