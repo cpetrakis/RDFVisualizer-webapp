@@ -17,7 +17,9 @@ Three simple steps: Build - Deploy - Run.
 
 1. Build. 
 
-This project is a Maven project, providing all the libs in pom.xml.  src folder contains all the files needed to build the web app and create a war file. Build can be done by executing the following command:
+This project is a Maven project, providing all the libs in pom.xml.  
+src folder contains all the files needed to build the web app and create a war file. 
+Build can be done by executing :
 
 ```bash
 mvn clean install
