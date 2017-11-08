@@ -13,13 +13,21 @@ Further information about the tool functionalities can be found [here.](http://w
 
 ### 2. Installation ###
 
-3 Simple Steps: Build - Deploy - Run.
+Three simple steps: Build - Deploy - Run.
 
-The folder src contains all the files needed to build the web app and create a war file.
+1. Build. 
 
-This project is a Maven project, providing all the libs in pom.xml. 
+This project is a Maven project, providing all the libs in pom.xml.  src folder contains all the files needed to build the web app and create a war file. Build can be done by executing the following command:
+
+```bash
+mvn clean install
+```
+
+2. Deploy. 
 
 You may use any application server that supports war files (recommended: Apache Tomcat version 7 and above).
+
+3. Run.
 
 After deployment you will be able to access the following screen in address: [URL]:[PORT]/RDFVisualizer
 
