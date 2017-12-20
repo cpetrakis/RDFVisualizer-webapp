@@ -242,7 +242,7 @@ e.g. http://localhost:8084/RDFVisualizer/?resource=http://www.mybuildingsample.c
 
 Further documentation about the tool functionalities you can find [here](http://www.cidoc-crm.org/sites/default/files/RDF%20visualiser.pdf)
 
-### 5. Contact ###
+### 5. Contact ### 
 
 Petrakis Kostas < cpetrakis@ics.forth.gr >
 
