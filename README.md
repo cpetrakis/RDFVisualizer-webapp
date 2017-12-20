@@ -9,7 +9,7 @@ RDF Visualizer supports browsing content from:
 2. [Blazegraph](https://www.blazegraph.com) database. 
 3. Simple file (Has been tested with .ttl files).
 
-Further information about the tool functionalities can be found [here.](http://www.cidoc-crm.org/sites/default/files/RDF%20visualiser.pdf)
+Further information about the tool functionalities can be found [here.](http://www.cidoc-crm.org/sites/default/files2/RDF%20visualiser.pdf)
 
 ### 2. Installation ###
 
@@ -240,7 +240,7 @@ Also you can pass the filename as a parameter creating urls like:
 [URL]: [port]/RDFVisualizer/?resource=[Subject URI]&filename=[Filename]
 e.g. http://localhost:8084/RDFVisualizer/?resource=http://www.mybuildingsample.com/building/1&filename=Mapping864.ttl
 
-Further documentation about the tool functionalities you can find [here](http://www.cidoc-crm.org/sites/default/files/RDF%20visualiser.pdf)
+Further documentation about the tool functionalities you can find [here](http://www.cidoc-crm.org/sites/default/files2/RDF%20visualiser.pdf)
 
 ### 5. Contact ### 
 
