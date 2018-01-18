@@ -34,9 +34,7 @@
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                         <span class="sr-only">Toggle navigation</span>
                     </a>
-
                     <h3 class='header' style='margin-bottom: 0px; margin-top: 12px; color:#f7f1f1; margin-left: 40%'><img alt="#" style='padding-right: 30px;' src='img/Title-iconl.png'>RDF Visualizer</h3>
-
                     <!--    <div class="navbar-custom-menu">
                             <ul class="nav navbar-nav">
                                 <li>
@@ -46,7 +44,6 @@
                                 </li>
                             </ul>
                         </div>   -->                                     
-
                 </nav>                
             </header>
             <!-- Left side column. contains the logo and sidebar -->
@@ -66,7 +63,6 @@
                                 <i class="fa fa-cog"></i>  <span>Configuration</span>
                             </div>
                         </li>
-
                         <li class="treeview">
                             <a href="#">                                
                                 <i class="material-icons">&#xe40a;</i> <span>Symbol & color Legend</span>
@@ -96,7 +92,6 @@
                 <!-- /.sidebar -->
             </aside>
             <!-- ***************************   MODALS   **************************************-->  
-
             <!--    ********************* TEXT *********************  -->
             <div  class="modal fade" id="text_Modal" role="dialog">
                 <div class="modal-dialog">    
@@ -129,7 +124,6 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 id="modtitle" class="modal-title"></h4>
                         </div> 
-
                         <div class="modal-body" style="padding: 25px 31px 10px 0px; max-height: 560px;">
                             <div style="margin-bottom: 10px;">
                                 <input style="margin-left: 64px;" type="checkbox" id="checkAll"> Select All  
@@ -161,8 +155,6 @@
                     </div>
                 </div>     
             </div>
-
-
             <!--    ********************* MODAL no data *********************  -->
             <div class="modal fade" id="noMoreData" role="dialog">
                 <div class="modal-dialog">    
@@ -193,7 +185,6 @@
                     </div>     
                 </div>
             </div>
-
             <!--    ********************* path of selected item *********************  -->
             <div class="modal fade" id="path_of_selection" role="dialog">
                 <div class="modal-dialog">    
@@ -212,7 +203,6 @@
                     </div>     
                 </div>
             </div>
-
             <!--    ********************* Check properties file *********************  -->
             <div class="modal fade" id="fix_properties_xml" role="dialog">
                 <div class="modal-dialog">    
@@ -243,7 +233,6 @@
                     </div>     
                 </div>
             </div>
-
             <!--    ********************* No label modal *********************  -->
             <div class="modal fade" id="no_label" role="dialog">
                 <div class="modal-dialog">    
@@ -259,7 +248,6 @@
                     </div>     
                 </div>
             </div>
-
             <!--    ********************* MODAL thumb *********************  -->
             <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -268,7 +256,6 @@
                             <button  type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             <h4 id="gallery_header" class="modal-title">Image Gallery</h4>
                         </div>
-
                         <div class="modal-body">                            
                             <div id="gallery" class="carousel slide" data-interval="false">
                                 <div id="start_carusel" class="carousel-inner">
@@ -280,10 +267,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--    ********************* -->         
-
-
+            </div>                 
             <!--***************************   HOME   **************************************-->                
             <div id="pt-main" class="pt-perspective">
                 <div id="home" class="pt-page" >
@@ -296,7 +280,6 @@
                                  <li><i class="fa fa-home"></i> Home</li>
                              </ol> -->
                         </section>
-
                         <!-- Main content -->
                         <section class="content">
                             <!-- Small boxes (Stat box) -->                          
@@ -313,21 +296,15 @@
                                                 <button style="visibility:hidden" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                             </div>
                                         </div><!-- /.box-header -->
-
                                         <div id="percOverview" class="box-body">
                                             <!-- ****************************************************************************** -->
                                             <div class='col-xs-12'>             
-
-
                                                 <form style=" margin-bottom: 5px;">
                                                     <input style='width:100%; height:33px; background-color:#EFF6F9 ' type="text" id="resource" name="resource"/>
                                                     <!--    <input style='margin-bottom: 4px;' class='btn btn-default'  type="button" id="SubmitBtn" value='Submit'/>          -->
                                                 </form>
-
                                                 <div class="configuration" style='display:none; padding:5px;'>
                                                     <i class="material-icons">&#xe869;</i>
-
-
                                                     <span>Choose a Template: </span>
                                                     <span style="margin: 0px 20px 0px 20px;">
                                                         <select class="selectpicker btn btn-default btn-xs">
@@ -336,18 +313,12 @@
                                                             <option>Template 3</option>
                                                         </select>
                                                     </span>
-
-
                                                     <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
                                                         <li><a tabindex="-1" href="#">Open Uri in new tab</a></li>
                                                         <li><a tabindex="-1" href="#">Copy Uri</a></li>   
                                                         <li class="divider"></li> 
                                                         <li><a tabindex="-1" href="#">Get path of selected item</a></li>   
                                                     </ul>
-
-
-
-
                                                     <span style="margin-right: 5px ;"><button   id='expand_all' class =' iouiou btn btn-default btn-xs' onclick="Expand_All()">Expand All<i style='padding-left: 10px; ' class="fa fa-expand" aria-hidden="true"></i></button></span>
                                                     <span> <button  id='collapse_all' class ='btn btn-default btn-xs' onclick="Collapse_All()">Collapse All<i style='padding-left: 10px' class="fa fa-compress" aria-hidden="true"></i></button></span>
                                                     <span  style="margin-left: 20px ;"> <button  class =' mark_same btn btn-default btn-xs' >Mark same instances<i style='padding-left: 10px' class="fa fa-flag" aria-hidden="true"></i></button> </span>
@@ -357,13 +328,8 @@
 
 
                                                     <!--   <input style='margin-bottom: 4px;' class='btn btn-default btn-xs fa fa-refresh'  type="button" id="SubmitBtn"><!-- <i class='fa fa-refresh'></i>  -->
-
                                                 </div>
-
-
-
                                                 <div id="empty_border"></div>
-
                                                 <div id="navigator_view" style="padding-top: 10px; display:none;">
                                                     <div id='new_tab_buttons' style='display:none;'>
                                                         <button style="margin-bottom:5px;"  class ='btn btn-default btn-xs' onclick="">Back to source path</button>         
@@ -375,32 +341,23 @@
                                                         <!--   </li>   -->
                                                     </ul>        
                                                 </div>
-
-
                                             </div><!-- /.box-body -->
                                         </div><!-- /.box -->
                                     </div><!-- /.col -->
-
                                 </div>
                             </div>
                             <div class="row">                               
                             </div>
-
                         </section><!-- /.content -->
                     </div><!-- /.content-wrapper -->
                 </div>  
             </div>
-
             <!--*********************  CONFIGURATION *******************************-->
-
-
             <div style="display:none;" id="configuration" class="pt-page" >                              
                 <div class="content-wrapper"> 
-
                     <section class="content-header">
                         <h1 style='font-size:18px; color: white;'>Configuration Page<small></small></h1>                            
                     </section>
-
                     <!-- Main content -->
                     <section class="content">
                         <!-- Small boxes (Stat box) -->                          
@@ -416,7 +373,6 @@
                                             <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                         </div>
                                     </div><!-- /.box-header -->
-
                                     <div id="percOverview" class="box-body">
                                         <div class="col-xs-12">
                                             <div class="box box-primary">                           
@@ -463,7 +419,6 @@
                                     </div><!-- /.box -->
                                 </div><!-- /.col -->
                                 <!-- ********************************** LABEL Predicates ************** --> 
-
                                 <div class="box box-solid">
                                     <div class="box-header">
                                         <i class="fa fa-info-circle"></i>
@@ -472,7 +427,6 @@
                                             <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                         </div>
                                     </div><!-- /.box-header -->
-
                                     <div id="percOverview" class="box-body">
                                         <div class="col-xs-12">
                                             <div class="box box-primary">                           
@@ -502,7 +456,6 @@
                                             <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                         </div>
                                     </div><!-- /.box-header -->
-
                                     <div id="percOverview" class="box-body">
                                         <div class="col-xs-12">
                                             <div class="box box-primary">                           
@@ -518,13 +471,8 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div><!-- /.box -->
                                 </div><!-- /.col -->
-
-
-
-
                                 <!-- *************************************************************** -->
                                 <div class="box box-solid">
                                     <div class="box-header">
@@ -534,7 +482,6 @@
                                             <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                         </div>
                                     </div><!-- /.box-header -->
-
                                     <div id="percOverview" class="box-body">
                                         <div class="col-xs-12">
                                             <div class="box box-primary">                           
@@ -556,7 +503,6 @@
                                                                     <th>Related Ontology</th>
                                                                     <th>Related Database</th>
                                                                 </tr>
-
                                                                 <tr>
                                                             </table>
                                                         </div>
@@ -566,27 +512,20 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div><!-- /.box -->
                                 </div><!-- /.col -->
-
                                 <!--    *****************************************************************    -->
                             </div>
                         </div>
                         <div class="row">                               
                         </div>
-
                     </section>            
                 </div>  
-
-            </div>
-            <!--        <footer class="main-footer">
-                        <strong>Copyright &copy; 2015 <a href="http://www.ics.forth.gr/" target="_blank">ICS - FORTH</a>.</strong> 
-                        All rights reserved.
-                    </footer>  -->
-
+            </div>   
+          <footer  style=" border-top:none; color:#ffffff; background-color: #222d32;" class="main-footer">               
+                <strong>System version 1.0 (2018-01-20T12:42)</strong>
+            </footer>           
         </div><!-- ./wrapper -->
-
         <!-- TEMPLATE JAVASCRIPT LIBRARIES -->
         <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script> <!-- jQuery 2.1.4 -->
         <script src="js/libs/jquery-ui.min.js"></script> <!-- jQuery UI 1.11.4 -->        
