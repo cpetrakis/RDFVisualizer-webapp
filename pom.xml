@@ -1,105 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>gr.ics.forth</groupId>
     <artifactId>RDFVisualizer-webapp</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-
     <name>RDFVisualizer-webapp</name>
-
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
-  <repositories>
-        <repository>
-            <id>ibiblio.repository</id>
-            <name>ibiblio.repository</name>
-            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-                <checksumPolicy>fail</checksumPolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>dice.repository snaps</id>
-            <name>dice.repository.snapshots</name>
-            <url>https://raw.github.com/DICE-UNC/DICE-Maven/master/snapshots</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>always</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>dice.repository</id>
-            <name>dice.repository</name>
-            <url>https://raw.github.com/DICE-UNC/DICE-Maven/master/releases</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>always</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>netbeans.repository</id>
-            <name>netbeans.repository</name>
-            <url>http://bits.netbeans.org/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-                <checksumPolicy>fail</checksumPolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>jboss</id>
-            <name>jboss.repository</name>
-            <url>http://repository.jboss.com/maven2/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-                <checksumPolicy>fail</checksumPolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>gbif-releases</id>
-            <name>gbif-realeses</name>
-            <url>http://repository.gbif.org/content/repositories/releases/</url>
-        </repository>
+    </properties>    
+    <repositories>
         <repository>
             <id>forth-public-maven-repo</id>
             <name>forth-public-maven-repo</name>
             <url>http://www.ics.forth.gr/isl/maven</url>  
-             <snapshots>
-                 <enabled>true</enabled>
+            <snapshots>
+                <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
                 <checksumPolicy>warn</checksumPolicy>
             </snapshots>                                            
         </repository>        
     </repositories>
-
     <build>
         <plugins>
-		<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.5</version>
@@ -161,15 +86,8 @@
                 </executions>
             </plugin>                               
         </plugins>
-    </build>
-      
-    <dependencies>            
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>1.3</version>
-            <type>jar</type>
-        </dependency>
+    </build>      
+    <dependencies>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -177,10 +95,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.external</groupId>
-            <artifactId>json-simple-1.1.1</artifactId>
-            <version>RELEASE82</version>
-            <type>jar</type>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>1.5</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -188,7 +105,7 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-          <dependency>
+        <dependency>
             <groupId>org.openrdf</groupId>
             <artifactId>openrdf-sesame</artifactId>
             <version>2.7.0</version>
@@ -204,7 +121,7 @@
             <artifactId>sesame-repository-sail</artifactId>
             <version>2.7.12</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.openrdf.sesame</groupId>
             <artifactId>sesame-rio-rdfxml</artifactId>
             <version>2.7.12</version>
@@ -214,7 +131,7 @@
             <artifactId>virt_sesame2</artifactId>
             <version>2.0</version>
         </dependency>
-		<dependency>
+        <dependency>
             <groupId>virtuoso</groupId>
             <artifactId>virtjdbc4</artifactId>
             <version>1.0</version>
@@ -232,7 +149,7 @@
             <version>1.2.17</version>
             <type>jar</type>
         </dependency>
-	<dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
             <version>1.7.5</version>                                                
@@ -243,28 +160,20 @@
             <type>pom</type>
             <version>3.1.0</version>
         </dependency>
-        
         <dependency>
             <groupId>com.blazegraph</groupId>
             <artifactId>bigdata-core</artifactId>
             <version>2.0.0</version>
-        </dependency> 
-           
+        </dependency>
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>1.4.0</version>
         </dependency>
-        
         <dependency>
             <groupId>gr.forth.ics.isl</groupId>
             <artifactId>RDFVisualizer-api</artifactId>
             <version>1.1-SNAPSHOT</version>
-        </dependency>  
-   <!--     <dependency>
-            <groupId>gr.ics.forth</groupId>
-            <artifactId>RDFVisualizer-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>   -->                                                                       
-    </dependencies>   
+        </dependency>
+    </dependencies>
 </project>
