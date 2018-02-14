@@ -73,13 +73,25 @@
                                 <li><div><i><img alt="#" style="padding-right: 5px; padding-bottom: 3px;" src="img/E53_Place.png"></i>  Places</div></li>                                
                             </ul>
                         </li>                                                                                                
-                        <li><a target='_blank' href="Readme.pdf"><i class="fa fa-question-circle "></i> <span>Help</span></a></li>                                                                                       
-
-                        <li  class="active">
-                            <a href="about.html">
-                                <i class="fa fa-info-circle "></i> <span>About</span>
-                            </a>
+                        <li>
+                            <a><i class="fa fa-question-circle "></i>
+                                <span>Help</span></a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <div><a style='color:#ffffff' target='_blank' href="Readme.pdf"><i class="fa fa fa-file-pdf-o"></i>
+                                            <span style='margin:10px'> Manual</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><a style='color:#ffffff' target='_blank' href="http://www.cidoc-crm.org/sites/default/files/RDF%20visualiser.pdf"><i class="fa fa fa-file-pdf-o"></i>
+                                            <span style='margin:10px'> Guide</span>
+                                        </a>
+                                    </div>
+                                </li>                             
+                            </ul>                                                    
                         </li>
+                        <li><a target='_blank' href="https://github.com/cpetrakis/RDFVisualizer-webapp"><i class="fa fa-info-circle "></i> <span>About</span></a></li>                       
 
                     </ul>
                 </section>
@@ -93,7 +105,7 @@
                     <div class="content-wrapper">
                         <!-- Content Header (Page header) -->
                         <section class="content-header">
-                            <h1 style="font-size:18px; color: white;">About<small></small></h1>                           
+                            <h1 style="font-size:18px; color: white;">Changes<small></small></h1>                           
                         </section>
 
                         <!-- Main content -->
@@ -104,18 +116,9 @@
                                 <div class="col-xs-12">
                                     <!-- jQuery Knob -->
                                     <div class="box box-solid" style="height:100%">
-                                        <div class="box-header" style="margin:0px 0px -15px 15px;">   
-                                             <div>                                                                                              
-<p><strong>RDF Visualizer</strong> is a generic browsing mechanism that gives the user a flexible, highly &ndash; configurable, detailed overview&nbsp;of an RDF dataset/database.</p>
-<p>BASIC PRINCIPLES</p>
-<p>1. Ability to display data of any schema/rdf format.<br />2. Ability to display all nodes of any class/instance.<br />3. Configurable rules to improve the layout or presentation for known classes and properties.<br /> 3.1 Hide URIs that are meaninglessforthe user<br />4. Display high density information in one screen (that is not possible in solutions based on &ldquo;object&nbsp;templates&rdquo;)</p>
-<p><br />INNOVATION</p>
-<p>Current systems that allow principles 1, 2 fail with principles 3,4 and those that allow for 4 fail with 1,2.</p>
-                                                    
-                                          
-                                            </div>
+                                        <div class="box-header" style="margin:0px 0px -15px 15px;">                                               
                                             <div>                                                
-                                                <h4 class="box-title" style="font-size: 14px;">System Versions</h4>
+                                                <h4 class="box-title" style="font-size: 14px;"></h4>
                                             </div>
                                           
                                         </div><!-- /.box-header -->
@@ -124,13 +127,9 @@
                                             <div class='col-xs-12'>                                                           
                                               
                                                 <div class="configuration" style=' padding:5px;'>                                                    
-                                                    version: 1.5 (context menu) (current version)<br>
-                                                    version: 1.4 (exclude types)<br>
-                                                    version: 1.3 (multiple types)<br>
-                                                    version: 1.2 (configurable input)<br>
-                                                    version: 1.1 (handle dimensions)<br>
-                                                    version: 0.9 (maven)<br>
-                                                    version: 0.8 (image gallery)<br>                                                                                                                                                                                                                
+                                                    2018-02-13: Hide username password fields from future configuration page (prevent browsers show remember password messages)<br>
+                                                    2018-02-14: Fix help left menu icon. Added manual and guide links <br>
+                                                    2018-02-14: fix_dimension functionality commented out (from scripts.js) in order to be generic <br>
                                                 </div> 
                                                 
                                             </div><!-- /.box-body -->
