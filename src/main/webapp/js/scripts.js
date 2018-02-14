@@ -772,7 +772,7 @@ function getModel(resource) {
                                 //  Fix dimension appearance
                                 
                                 if (type == "E54_Dimension") {
-                                    fix_dimension_label(jsonresponse, clean_uri, type)
+                                  //  fix_dimension_label(jsonresponse, clean_uri, type)
                                 }
                                 ////////////////////////////////////////////////////////////////////
                             }
@@ -1012,7 +1012,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                                                                                                            
                                     ////////// Dimension Fix                                                           
                                     if (type == "E54_Dimension") {
-                                        fix_dimension_label(jsonresponse, uri_i, type);
+                                       // fix_dimension_label(jsonresponse, uri_i, type);
                                     }
                                     /////////// If current depth greater than six replace expand button with open in new tab
                                     if (current_depth > 39) {
