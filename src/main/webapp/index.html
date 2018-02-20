@@ -102,7 +102,8 @@
                                 </li>                             
                             </ul>                                                    
                         </li>
-                        <li><a target='_blank' href="https://github.com/cpetrakis/RDFVisualizer-webapp"><i class="fa fa-info-circle "></i> <span>About</span></a></li>                                           
+                        <!--<li><a target='_blank' href="https://github.com/cpetrakis/RDFVisualizer-webapp"><i class="fa fa-info-circle "></i> <span>About</span></a></li> -->
+                        <li><a><i class="fa fa-info-circle "></i> <span>About</span></a></li>                       
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -322,7 +323,7 @@
                                                 <div class="configuration" style='display:none; padding:5px;'>
                                                     <i class="material-icons">&#xe869;</i>
                                                     <span>Choose a Template: </span>
-                                                    <span style="margin: 0px 20px 0px 20px;">
+                                                    <span  style="margin: 0px 20px 0px 20px;">
                                                         <select class="selectpicker btn btn-default btn-xs">
                                                             <option>Template 1</option>
                                                             <option>Template 2</option>
@@ -335,9 +336,9 @@
                                                         <li class="divider"></li> 
                                                         <li><a tabindex="-1" href="#">Get path of selected item</a></li>   
                                                     </ul>
-                                                    <span style="margin-right: 5px ;"><button   id='expand_all' class =' iouiou btn btn-default btn-xs' onclick="Expand_All()">Expand All<i style='padding-left: 10px; ' class="fa fa-expand" aria-hidden="true"></i></button></span>
-                                                    <span> <button  id='collapse_all' class ='btn btn-default btn-xs' onclick="Collapse_All()">Collapse All<i style='padding-left: 10px' class="fa fa-compress" aria-hidden="true"></i></button></span>
-                                                    <span  style="margin-left: 20px ;"> <button  class =' mark_same btn btn-default btn-xs' >Mark same instances<i style='padding-left: 10px' class="fa fa-flag" aria-hidden="true"></i></button> </span>
+                                                    <span style="display:none; margin-right: 5px ;"><button   id='expand_all' class =' iouiou btn btn-default btn-xs' onclick="Expand_All()">Expand All<i style='padding-left: 10px; ' class="fa fa-expand" aria-hidden="true"></i></button></span>
+                                                    <span style="display:none;"> <button  id='collapse_all' class ='btn btn-default btn-xs' onclick="Collapse_All()">Collapse All<i style='padding-left: 10px' class="fa fa-compress" aria-hidden="true"></i></button></span>
+                                                    <span  style="margin-left: 0px ;"> <button  class =' mark_same btn btn-default btn-xs' >Mark same instances<i style='padding-left: 10px' class="fa fa-flag" aria-hidden="true"></i></button> </span>
 
                                                     <input style='margin-bottom: 4px; width:18px; height:22px;' class='btn btn-default btn-xs pull-right'  type="button" id="SubmitBtn" value="">
                                                     <i id="filterefresh" class="fa fa-refresh pull-right"></i>
@@ -536,7 +537,7 @@
                 </div>  
             </div>   
           <footer  style=" border-top:none; color:#ffffff; background-color: #222d32;" class="main-footer">               
-                <strong>System version 1.0-SNAPSHOT (2018-02-14T117:50)</strong>
+                <strong>System version 1.0.0-SNAPSHOT (2018-02-14T117:50)</strong>
             </footer>           
         </div><!-- ./wrapper -->
         <!-- TEMPLATE JAVASCRIPT LIBRARIES -->
