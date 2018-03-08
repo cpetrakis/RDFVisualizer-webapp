@@ -7,8 +7,8 @@ package gr.ics.forth.rdfvisualizer.webapp;
 
 import com.google.gson.Gson;
 import gr.ics.forth.rdfvisualizer.api.core.properties.XSTREAMpropertyReader;
-import gr.ics.forth.redfvisualizer.api.core.utils.IntPair;
-import gr.ics.forth.redfvisualizer.api.core.utils.Prioritise;
+import gr.ics.forth.rdfvisualizer.api.core.utils.IntPair;
+import gr.ics.forth.rdfvisualizer.api.core.utils.Prioritise;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -61,10 +61,10 @@ public class PredicatesPriority extends HttpServlet {
 
                 GetConfigProperties app = new GetConfigProperties();
                 Properties props = app.getConfig("config.properties");
-                String properties_xml = props.getProperty("priorities_xml").trim();   
+                String properties_xml = props.getProperty("priorities_xml").trim();
                 
                 XSTREAMpropertyReader xreader = new XSTREAMpropertyReader();
-                priorities = xreader.returnPriorities(properties_xml);
+                priorities = xreader.returnPriorities(properties_xml);                
 
                 Prioritise pr = new Prioritise();
                 Map<String, List<IntPair>> prioritiesSorted = new HashMap<String, List<IntPair>>();
