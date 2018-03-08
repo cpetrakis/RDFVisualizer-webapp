@@ -9,7 +9,7 @@ import gr.ics.forth.rdfvisualizer.api.core.impl.BlazeGraphManager;
 import gr.ics.forth.rdfvisualizer.api.core.impl.RDFfileManager;
 import gr.ics.forth.rdfvisualizer.api.core.impl.TripleStoreManager;
 import gr.ics.forth.rdfvisualizer.api.core.impl.TripleStoreManagerWorking;
-import gr.ics.forth.redfvisualizer.api.core.utils.Triple;
+import gr.ics.forth.rdfvisualizer.api.core.utils.Triple;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -233,7 +233,11 @@ public class GetData extends HttpServlet {
         String db_port = props.getProperty("db_port").trim();
         String db_username = props.getProperty("db_username").trim();
         String db_password = props.getProperty("db_password").trim();
-        String db_graphname = props.getProperty("db_graphname").trim();
+        String db_graphname = props.getProperty("db_graphname").trim();        
+        String label = props.getProperty("schema_label").trim();
+        String pref_labels = props.getProperty("pref_labels").trim();
+        
+       
         String exclude_inverse = props.getProperty("exclude_inverse").trim();        
         List<String> exclusions = Arrays.asList(exclude_inverse.split("\\s*,\\s*"));
 
@@ -249,21 +253,27 @@ public class GetData extends HttpServlet {
             subject = subject.substring(0, 500);
         }
        
-        String subjectLabel = manager.returnLabel(subject, "http://www.w3.org/2000/01/rdf-schema#label");
+        String subjectLabel = manager.returnLabel(subject, label);
         String subjectType = manager.returnType(subject);
+                       
+        String[] pref_lbls = pref_labels.split(",");
 
-        if (subjectLabel.isEmpty()) {
-            subjectLabel = manager.returnLabel(subject, "http://www.w3.org/2004/02/skos/core#prefLabel");
+        if ((subjectLabel.isEmpty()) && (pref_lbls.length > 0)) {
+            subjectLabel = manager.returnLabel(subject, pref_lbls[0]);
         }
 
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
 
         Set<String> labels = new TreeSet();
 
-        labels.add("http://www.w3.org/2000/01/rdf-schema#label");
-        labels.add("http://www.w3.org/2004/02/skos/core#prefLabel");
-
-        outgoingLinks = manager.returnOutgoingLinksWithTypes(subject, labels, db_graphname); 
+        labels.add(label);
+        if (pref_lbls[0].length() > 0) {
+            for (int i = 0; i < pref_lbls.length; i++) {                
+                labels.add(pref_lbls[i]);
+            }
+        }
+        
+        outgoingLinks = manager.returnOutgoingLinksWithTypes(subject, labels, db_graphname);  
         JSONObject result = createJsonFile(outgoingLinks, subjectLabel, subjectType, subject);
 
       //  Map<Triple, List<Triple>> incomingLinks = new HashMap<Triple, List<Triple>>();
@@ -272,7 +282,7 @@ public class GetData extends HttpServlet {
 
         //merge json shows inverse labels otherwise only outgoing links 
         //return mergeJson(result, result0, subjectLabel, subjectType, subject);//result;
-          return result;
+        return result;
 
     }
     
@@ -294,6 +304,8 @@ public class GetData extends HttpServlet {
         Properties props = app.getConfig("config.properties");
 
         String blazegraph_url = props.getProperty("blazegraph_url").trim();
+        String label = props.getProperty("schema_label").trim();
+        String pref_labels = props.getProperty("pref_labels").trim();
         BlazeGraphManager manager = new BlazeGraphManager();
 
         HttpClient httpClient = new HttpClient();
@@ -307,20 +319,26 @@ public class GetData extends HttpServlet {
             subject = subject.substring(0, 500);
         }
 
-        String subjectLabel = manager.returnLabel(subject, "http://www.w3.org/2000/01/rdf-schema#label");
+        String subjectLabel = manager.returnLabel(subject, label);
         String subjectType = manager.returnType(subject);
 
-        if (subjectLabel.isEmpty()) {
-            subjectLabel = manager.returnLabel(subject, "http://www.w3.org/2004/02/skos/core#prefLabel");
-        }
+        String[] pref_lbls = pref_labels.split(",");
 
+        if ((subjectLabel.isEmpty()) && (pref_lbls.length > 0)) {
+            subjectLabel = manager.returnLabel(subject, pref_lbls[0]);
+        }
+                
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
         // Map<Triple, List<Triple>> incomingLinks = new HashMap<Triple, List<Triple>>();
 
         Set<String> labels = new TreeSet();
 
-        labels.add("http://www.w3.org/2000/01/rdf-schema#label");
-        labels.add("http://www.w3.org/2004/02/skos/core#prefLabel");
+        labels.add(label);
+        if (pref_lbls[0].length() > 0) {
+            for (int i = 0; i < pref_lbls.length; i++) {
+                labels.add(pref_lbls[i]);
+            }
+        }
 
         outgoingLinks = manager.returnOutgoingLinksWithTypes(subject, labels); 
 
@@ -354,6 +372,8 @@ public class GetData extends HttpServlet {
 
         String defaultfolder = props.getProperty("default_folder").trim();
         String filepath = props.getProperty("filename").trim();
+        String label = props.getProperty("schema_label").trim();
+        String pref_labels = props.getProperty("pref_labels").trim();
 
         String subject = resource;
 
@@ -376,11 +396,13 @@ public class GetData extends HttpServlet {
             subject = subject.substring(0, 500);
         }
 
-        String subjectLabel = manager.returnLabel(subject, "http://www.w3.org/2000/01/rdf-schema#label");
+        String subjectLabel = manager.returnLabel(subject, label);
         String subjectType = manager.returnType(subject);
 
-        if (subjectLabel.isEmpty()) {
-            subjectLabel = manager.returnLabel(subject, "http://www.w3.org/2004/02/skos/core#prefLabel");
+        String[] pref_lbls = pref_labels.split(",");
+
+        if ((subjectLabel.isEmpty()) && (pref_lbls.length > 0)) {
+            subjectLabel = manager.returnLabel(subject, pref_lbls[0]);
         }
 
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
@@ -388,12 +410,17 @@ public class GetData extends HttpServlet {
 
         Set<String> labels = new TreeSet();
 
-        labels.add("http://www.w3.org/2000/01/rdf-schema#label");
-        labels.add("http://www.w3.org/2004/02/skos/core#prefLabel");
+        labels.add(label);
+        if (pref_lbls[0].length() > 0) {
+            for (int i = 0; i < pref_lbls.length; i++) {                
+                labels.add(pref_lbls[i]);
+            }
+        } 
+                
 
         outgoingLinks = manager.returnOutgoingLinksWithTypes(subject, labels);
         JSONObject result = createJsonFile(outgoingLinks, subjectLabel, subjectType, subject);
-
+                       
         return result;
 
     }
