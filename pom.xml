@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gr.ics.forth</groupId>
     <artifactId>RDFVisualizer</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>RDFVisualizer</name>
     <properties>
