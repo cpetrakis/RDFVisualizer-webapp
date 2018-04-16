@@ -1,4 +1,6 @@
 
+
+
 #nav {   
     height:67vh;
     padding: 0px 4px 0px 0px;
@@ -77,7 +79,17 @@
 
 .grey-tooltip + .tooltip > .tooltip-inner {
     background-color: #464f51;
+    
 }
+
+	
+/*// OBJECT MOUSOVER  */
+.tooltip-inner {
+    max-width: 500px !important;
+    z-index: 100000000;
+}
+
+
 
 #empty_border{
     height:15px; 
@@ -169,8 +181,7 @@
 /*** Parthenos  ***/
 .PE25_RI_Consortium,	
 .PE28_Curation_Plan,	
-.PE34_Team,	
-.PE35_Project
+.PE34_Team
 {        
     background: #E0D3D5;  
 }  
@@ -183,8 +194,7 @@
 /*** Parthenos  ***/
 #PE25_RI_Consortium,		
 #PE28_Curation_Plan,	
-#PE34_Team,	
-#PE35_Project
+#PE34_Team
 {                   
     color:  #9B4C4C;
 }
@@ -359,6 +369,7 @@
 .PE17_Curated_Data_E-Service,	
 .PE26_RI_Project,	
 .PE33_E-Access_Brokering_Service,
+.PE35_Project,
 /*** CRMdig  ***/
 .D2_Digitization_Process,
 .D3_Formal_Derivation,
@@ -422,6 +433,7 @@
 #PE17_Curated_Data_E-Service,
 #PE26_RI_Project,
 #PE33_E-Access_Brokering_Service,
+#PE35_Project,
 /*** CRMdig  ***/
 #D2_Digitization_Process,
 #D3_Formal_Derivation,
