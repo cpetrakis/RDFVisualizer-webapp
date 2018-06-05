@@ -679,7 +679,7 @@ function getModel(resource) {
                     var current_pred = final_preds[i].replace(/\#/g, "_");
                     if (!(  (current_pred == (schema_Label_uri.split('/').pop()).replace(/\#/g, "_"))||(current_pred == (type_Label_uri.split('/').pop()).replace(/\#/g, "_"))))
                     {
-                        htmltr = htmltr + ("<li  id='predicate_style'><span class='folder predicate'><a pred_id='" + current_pred + "' class=grey-tooltip data-placement='top' data-toggle='tooltip' title='" + jsondata.Subject.label + " [" + type + "]'>" + pred_val //+"<i class='fa fa-minus' aria-hidden='true'></i>"
+                        htmltr = htmltr + ("<li  id='predicate_style'><span class='folder predicate'><a pred_id='" + current_pred + "' class=grey-tooltip data-placement='top' data-toggle='tooltip' title='" + (jsondata.Subject.label).replace(/['"/]/gi, '`') + " [" + type + "]'>" + pred_val //+"<i class='fa fa-minus' aria-hidden='true'></i>"
                                 + "</a></span><ul class='preds_ul' id =" + current_pred/*.replace(/ /g, "_")*/ + "></span></ul></li>");
                     }                  
                 }
@@ -942,7 +942,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                             (current_pred == (type_Label_uri.split('/').pop()).replace(/\#/g, "_"))||     
                             (current_pred == (pref_Label_uri.split('/').pop()).replace(/\#/g, "_") )                              
                         )){
-                            html = html + ("<li id='inner_predicate'><span pred_uri='"+pred_val+"' class='folder predicate'> <a class=grey-tooltip data-placement='top' data-toggle='tooltip' title='" + jsondata.Subject.label + " [" + type + "]'>" + pred_val
+                            html = html + ("<li id='inner_predicate'><span pred_uri='"+pred_val+"' class='folder predicate'> <a class=grey-tooltip data-placement='top' data-toggle='tooltip' title='" + (jsondata.Subject.label).replace(/['"/]/gi, '`') + " [" + type + "]'>" + pred_val
                                    + "</a></span ><ul class='preds_ul' id =" + (current_pred).replace(".", "_") + "></ul></span></li>");                    
                         }                                                       
                 }
