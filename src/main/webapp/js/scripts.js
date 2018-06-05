@@ -936,7 +936,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                         pred_val = final_pred_labls[i];
                     }
                     
-                    /////////////////////////////////////an dei schema label den to vgazei DEMO////////////// 
+                    /////////////////////////////////////Does not show  'schema' & 'label' properties DEMO////////////// 
                     var current_pred = final_preds[i].replace(/\#/g, "_");
                     if (!(  (current_pred == (schema_Label_uri.split('/').pop()).replace(/\#/g, "_"))||   
                             (current_pred == (type_Label_uri.split('/').pop()).replace(/\#/g, "_"))||     
