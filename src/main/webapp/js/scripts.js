@@ -1049,7 +1049,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                             /***************************** circle handling ******/
                             if (($('[uri=' + uri_i + ']').length) > 0) {
                                 //  console.log('loop')
-                                htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span onclick='highlight(\"" + uri_i + "\")' style=' cursor:pointer; margin-right:8px; padding-left:10px; color:#656666;' class='folder subject " + type + "'>"
+                                htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)' onclick='highlight(\"" + uri_i + "\")' style=' cursor:pointer; margin-right:8px; padding-left:10px; color:#656666;' class='folder subject " + type + "'>"
                                 + ((lbl.replace("http://qudt.org/vocab/unit#","*/")).replace(prefix, "*/")).replace("http://erlangen-crm.org/current/","") + "<a id='" + type + "'></span></li>");                                                              
                             }
 
