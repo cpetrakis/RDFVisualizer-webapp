@@ -1025,7 +1025,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                                     if (obj_type == "NOTYPE") {
  
                                         htmltrob = ("<li  uri=" + uri_i + " class='' id='" + literal + "'><span  oncontextmenu='rightClickMenu(this)'  style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject " /*+ literal.replace("CRM: ", "")*/ + "'>" +
-                                                ((lbl.replace(prefix, "*/")).replace("http://qudt.org/vocab/unit#", "*/")).replace("http://erlangen-crm.org/current/", "") + "</span></li>");
+                                                ((lbl.replace(prefix, "*/")).replace("http://qudt.org/vocab/unit#", "*/")) + "</span></li>");
 
                                         ///////////////////////////////////////// TEXTS///////////////////////////////
                                         if ((lbl.length > 660) && (lbl.length < 1000)) {
@@ -1050,7 +1050,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                             if (($('[uri=' + uri_i + ']').length) > 0) {
                                 //  console.log('loop')
                                 htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)' onclick='highlight(\"" + uri_i + "\")' style=' cursor:pointer; margin-right:8px; padding-left:10px; color:#656666;' class='folder subject " + type + "'>"
-                                + ((lbl.replace("http://qudt.org/vocab/unit#","*/")).replace(prefix, "*/")).replace("http://erlangen-crm.org/current/","") + "<a id='" + type + "'></span></li>");                                                              
+                                + ((lbl.replace("http://qudt.org/vocab/unit#","*/")).replace(prefix, "*/")) + "<a id='" + type + "'></span></li>");                                                              
                             }
 
                             /***************************** circle handling ******/
