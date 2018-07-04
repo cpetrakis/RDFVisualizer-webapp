@@ -5,7 +5,7 @@
  */
 
 /*
- Copyright (c) 2016 Kostas Petrakis <cpetrakis@ics.forth.gr>
+ Copyright (c) 2016 Kostis Petrakis <cpetrakis@ics.forth.gr>
  
  @TODO:
     -   avoid circles
@@ -39,6 +39,7 @@ $.post("GetPropertiesValues", {
     });
 
 /*********************** Get Subject Uri from link****************************/
+
 var _GET = (function () {
     var _get = {};
     var re = /[?&]([^=&]+)(=?)([^&]*)/g;
@@ -48,8 +49,9 @@ var _GET = (function () {
 })();
 
 /******************* Set to local storage filename value **********************/
+
 if (!(_GET.filename === undefined)) {
-   // var folderpath = _GET.filename;
+   // var folderpath = _GET.filename;   
     localStorage.setItem("filename", _GET.filename);         
 }
 
@@ -67,13 +69,25 @@ if (!(_GET.prev_resource === undefined)) {
     //getModel(_GET.resource);
 }
 
-/******************* Press sumbit button on input enter************************/
+/******************************************************************************/
+
+/**
+ * @summary Press sumbit button on input enter
+ * @param {object} event
+ */
+
 $("#resource").keyup(function (event) {
-    if (event.keyCode == 13) {
+    if (event.keyCode === 13) {
         $("#SubmitBtn").click();               
     }
 });
-/************************* Manual Subject Uri *********************************/
+
+/******************************************************************************/
+
+/**
+ * @summary Manual Subject Uri
+ */
+
 $(document).ready(function () {          
     $('#SubmitBtn').click(function () {          
         getModel(($('#resource').val()));        
@@ -135,7 +149,6 @@ function returnCleanTable(values) {
     });
     return uniq_vals;
 }
-
 /************************* Go to next instance******************************/
 /**
  * @summary Go to next instance
@@ -324,7 +337,7 @@ function imageModal(src) {
     
     var html = "";
     for (var i = 0; i < imgs.length; i++) {
-        if (!(src == imgs[i])) {            
+        if (!(src === imgs[i])) {            
             html = html + "<div class='item to_delete'><img alt='#' src=" + imgs[i] + " class='' style='width: 100%;' ></div>";
         }
     }
@@ -417,14 +430,14 @@ function fix_dimension_label(json, uri, type) {
             $.each(json.Objects, function () {
                 var strings = this.uri.split('/');
                 var ll = strings[strings.length - 1];
-                if (this.predicate_uri == jsonvalues[i]) {
+                if (this.predicate_uri === jsonvalues[i]) {
                     values.push(ll.replace("unit#", ""));
                 }
             });
         }
-        var vals = returnCleanTable(values)
-
-        vals[0] = vals[0] + ": "
+        var vals = returnCleanTable(values);
+        vals[0] = vals[0] + ": ";
+        
         var string = "";
         for (var i = 0; i < vals.length; i++) {
             string = string + " " + vals[i];
@@ -440,40 +453,86 @@ function fix_dimension_label(json, uri, type) {
     });
 
 
-}
+}  
+/************************ Check if string is a valid uri ********************/
+/**
+ * @summary Check if string is a valid uri 
+ * @param {string} uri
+ */
+/*
+function is_valid_Uri(uri) {    
+  var result = false;
+  if(uri.match((/^([a-z][a-z0-9+\-.]*:(\/\/([a-z0-9\-._~%!$&'()*+,;=]+@)?([a-z0-9\-._~%]+|\[[a-f0-9:.]+\]|\[v[a-f0-9][a-z0-9\-._~%!$&'()*+,;=:]+\])(:[0-9]+)?(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)*\/?|(\/?[a-z0-9\-._~%!$&'()*+,;=:@]+(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)*\/?)?)|([a-z0-9\-._~%!$&'()*+,;=@]+(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)*\/?|(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)+\/?))(\?[a-z0-9\-._~%!$&'()*+,;=:@\/?]*)?(#[a-z0-9\-._~%!$&'()*+,;=:@\/?]*)?$/ig))){
+      result = true;
+  } 
+  //result = uri.match(/^([a-z][a-z0-9+\-.]*:(\/\/([a-z0-9\-._~%!$&'()*+,;=]+@)?([a-z0-9\-._~%]+|\[[a-f0-9:.]+\]|\[v[a-f0-9][a-z0-9\-._~%!$&'()*+,;=:]+\])(:[0-9]+)?(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)*\/?|(\/?[a-z0-9\-._~%!$&'()*+,;=:@]+(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)*\/?)?)|([a-z0-9\-._~%!$&'()*+,;=@]+(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)*\/?|(\/[a-z0-9\-._~%!$&'()*+,;=:@]+)+\/?))(\?[a-z0-9\-._~%!$&'()*+,;=:@\/?]*)?(#[a-z0-9\-._~%!$&'()*+,;=:@\/?]*)?$/ig);
+  //console.log(result)
+  return result;
+};
+*/
+
+
 /************************ Fix dimensions appearance**************************/
 /************ Goes one level deeper and get values **************************/
 /**
  * @summary Goes one level deeper and get values
  * @param {json} json
  * @param {string} lbl
+ * @param {string} uri
+ * @param {string} color
  */
-function create_label(json, lbl) {
+function create_label(json, lbl, uri, color) {
 
     var allpreds = new Array();
 
     $.each(json.Objects, function () {
-        if (this.predicate_uri == pref_Label_uri) {           
-            allpreds.push(this.uri)
+        if (this.predicate_uri === pref_Label_uri) {
+            allpreds.push(this.uri);
         }
     });
-    
-    var vals = returnCleanTable(allpreds);
-    
-    var string = "";
-        for (var i = 0; i < vals.length; i++) {
-            string = string + "," + vals[i];
-    } 
 
-    var result = (lbl.replace(prefix, "*/").replace(imgprefix, ""))+ string.replace((lbl.replace(prefix, "*/").replace(imgprefix, "")),"");
-        result = result.replace(/,\s*$/, "");
-        
-     if(string.length>0){
-         return result.replace(",,", ",");        
-     }else{
-         return lbl.replace(prefix, "*/").replace(imgprefix, "");        
-     }
+    var vals = returnCleanTable(allpreds);
+
+    var string = "";
+    for (var i = 0; i < vals.length; i++) {
+        string = string + "," + vals[i];
+    }
+
+    var result = (lbl.replace(prefix, "*/").replace(imgprefix, "")) + string.replace((lbl.replace(prefix, "*/").replace(imgprefix, "")), "");
+    result = result.replace(/,\s*$/, "");
+
+    var res;
+           
+    if (string.length > 0) { 
+        res = "<a style='color:"+color+"' class='grey-tooltip' data-placement='right' data-toggle='tooltip'  title='' data-original-title='"+uri+"' >"+                                        
+        result.replace(",,", ",")
+          +"</a>";
+        return res;        
+    } else {            
+        res = "<a style='color:"+color+"' class='grey-tooltip' data-placement='right' data-toggle='tooltip'  title='' data-original-title='"+uri+"' >"+                                        
+        lbl.replace(prefix, "*/").replace(imgprefix, "");
+          +"</a>";
+        return res;
+    }    
 }
+
+/********************** Add uri popover (object uri tooltip)************************/
+
+/**
+ * @summary Get all types of an object and return them as a string
+ * @param {string} uri
+ * @param {string} lbl
+ * @param {string} color
+ */
+
+function create_uri_popover(uri, lbl, color) {
+    
+    var result = "<a " + color + "  class='grey-tooltip' data-placement='right' data-toggle='tooltip'  title='' data-original-title='" + decodeURI(uri) + "' >"
+            + lbl.replace(prefix, "*/") +
+            "</a>";   
+    return result;
+}
+;
 
 /******* Get all types of an object and return them as a string****************/
 
@@ -487,7 +546,7 @@ function fix_type(json) {
     var alltypes = new Array();
 
     $.each(json, function () {
-        if (this.predicate_uri == type_Label_uri) {
+        if (this.predicate_uri === type_Label_uri) {
             alltypes.push(this.uri.split('/').pop());
         }
     });
@@ -528,6 +587,11 @@ function type_is_unique_child(json) {
 }
 ;
 
+/****** Checks if an object has only one "prefLabel" child and removes it ***********/
+/**
+ * @summary Checks if an object has only one "prefLabel" child and removes it
+ * @param {json} json
+ */
 function prefLabel_is_unique_child(json) {
     
     var cnt=0;   
@@ -547,7 +611,6 @@ function prefLabel_is_unique_child(json) {
 ;
 
 ////////////////////////////////////////////////////////////////////////////
-
 /***************** Creates the first level of the tree  *******************/
 /**
  * @summary Creates the first level of the tree (Subject-properties-Objects)
@@ -690,8 +753,9 @@ function getModel(resource) {
 
             $('#browser').append(htmltr);
 
-            /*****************************************************************************/
-            /************************** Object Creation **********************************/
+            /******************************************************************/
+            /************************** Object Creation ***********************/
+            /******************************************************************/
 
             if (($(jsondata.Objects).length) > 0) {
 
@@ -720,8 +784,8 @@ function getModel(resource) {
                         var htmltrob;
 
                         if ((response=="")) {                            
-                            htmltrob = ("<li uri=" + clean_uri + " class='' id='" + literal + "'><span style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject " /*+ literal.replace("CRM: ", "")*/ + "'>" +
-                                    literal.replace(prefix, "*/") + "</span></li>");
+                            htmltrob = ("<li uri=" + clean_uri + " class='' id='" + literal + "'><span style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject'>" +  
+                                    literal.replace(prefix, "*/") + "</span></li>");                            
                             ///////////////////////////////////////// TEXTS///////////////////////////////
                             if ((literal.length > 600) && (literal.length < 1000)) {
                                 htmltrob = ("<li uri=" + clean_uri + " class='' id='" + literal.replace(/'/g, "\"") + "'><span style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject'>" +
@@ -743,43 +807,41 @@ function getModel(resource) {
                             }
                             var img = ""; //(lbl.indexOf('.jpg') > -1)   //(result.indexOf(".png")>-1)||(result.indexOf(".bmp")>-1)||(result.indexOf(".jpeg")>-1)||(result.indexOf(".jpg")>-1) )                                
                             if ((lbl.match(/\.(jpeg|jpg|gif|png)$/)!=null)|| (obj_type== image_type_uri) ){
-                                img = "<a href='#' class='pop'><img class='hover_zoom img_toShow' onclick='imageModal(\"" + lbl + "\");' id='myImg' src='" + lbl + "' /></a>";
+                                img = "<a href='#' class='pop'><img class='hover_zoom img_toShow' onclick='imageModal(\"" + lbl + "\");' id='myImg' src='" + lbl + "' /></a>";                           
                             }
 
-                            if (($(jsonresponse.Objects).length) > 0) {                                                    
+                            if (($(jsonresponse.Objects).length) > 0) {                                
                                 //  If the Object has only one child "type" then don't show expand button
                                 if (type_is_unique_child($(jsonresponse.Objects))) {
-
                                     htmltrob = ("<li uri=" + clean_uri + " id='" + this_uri + "'>" + img +
                                                 "<span oncontextmenu='rightClickMenu(this)'  style='color:#656666; height:inherit;  margin-right:8px; padding-left:10px' class='folder subject " + type + "''>" +
-                                                create_label(jsonresponse, lbl) /*(lbl.replace(prefix, "* /").replace(imgprefix, ""))*/ + "<a id='" + type + "'> [ " +
+                                                create_label(jsonresponse,lbl,this_uri,'#333333')+ "<a id='" + type + " '> [ " +
                                                 fix_type(($(jsonresponse.Objects))) + /*type +*/ " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='' id='add'></i></span></li>");
                                 }                                                                                          
                                 else {
-
                                     htmltrob = ("<li uri=" + clean_uri + " id='" + this_uri + "'>" + img + 
                                                 "<span oncontextmenu='rightClickMenu(this)'  style='height:inherit; cursor:pointer;  margin-right:8px; padding-left:10px' class=' folder subject " + type + "'onclick='objectToSubject(\"" + this_uri + "\"," + (-1) + "," + (-2) + "," + (-2) + ",this)'>" +
-                                                create_label(jsonresponse, lbl) /*   (lbl.replace(prefix, "* /").replace(imgprefix, ""))*/ + "<a id='" + type + "'> [ " +
+                                                create_label(jsonresponse, lbl, this_uri,'#333333')+ "<a id='" + type + "'> [ " +
                                                 fix_type(($(jsonresponse.Objects))) + /*type +*/ " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='fa fa-plus pull-right' id='add'></i></span></li>");
                                 }                                
                                 //  If the Object has only one child "prefLabel" then don't show expand button
                                 if (prefLabel_is_unique_child($(jsonresponse.Objects)) ) {
-                                    htmltrob = ("<li uri=" + clean_uri + " id='" + this_uri + "'>" + img +
-                                                "<span oncontextmenu='rightClickMenu(this)'  style='color:#656666; height:inherit;  margin-right:8px; padding-left:10px' class='folder subject " + type + "''>" +
-                                                 create_label(jsonresponse, lbl) + "<a id='" + type + "'> [ " +
+                                    htmltrob = ("<li uri=" + clean_uri + " id='" + this_uri + "'>" + img +                                                                                                      // OBJECT MOUSOVER 
+                                                "<span oncontextmenu='rightClickMenu(this)'  style='color:#656666; height:inherit;  margin-right:8px; padding-left:10px' class='folder subject " + type + "''>" +//"<a class=grey-tooltip data-placement='auto' data-toggle='tooltip' title='" + this_uri + "'>"+
+                                                 create_label(jsonresponse, lbl,this_uri) + "<a id='" + type + "'> [ " +
                                                  fix_type(($(jsonresponse.Objects))) + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='' id='add'></i></span></li>");
                                 }
-                                //  Fix dimension appearance
                                 
-                                if (type == "E54_Dimension") {
-                                  //  fix_dimension_label(jsonresponse, clean_uri, type)
-                                }
+                                //  Fix dimension appearance                                
+                                /*   if (type == "E54_Dimension") {
+                                    fix_dimension_label(jsonresponse, clean_uri, type)
+                                }*/
                                 ////////////////////////////////////////////////////////////////////
                             }
                             else {
                                 if (obj_type == "NOTYPE") {
                                     var txt = literal.replace(prefix, "*/");
-                                    htmltrob = ("<li uri=" + clean_uri + " class='' id='" + literal + "'><span  style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject " /*+ literal.replace("CRM: ", "")*/ + "'>" +
+                                    htmltrob = ("<li uri=" + clean_uri + " class='' id='" + literal + "'><span  style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject'>" +
                                             txt + "</span></li>");
                                     ///////////////////////////////////////// TEXTS///////////////////////////////
                                     if ((txt.length > 600) && (txt.length < 1000)) {
@@ -899,6 +961,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
 
                 var type = (jsondata.Subject.type).split('/').pop();
                 var outlbl = jsondata.Subject.label;
+                
                 if (jsondata.Subject.label == "") {
                     outlbl = resource;
                 }
@@ -909,7 +972,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                 }               
                 
                 var html = ("<li><span oncontextmenu='rightClickMenu(this)' uri='" + jsondata.Subject.subject.replace(/[^a-z0-9-_]+/gi, "_") + "' onclick='changeIcon(this)' style='height:inherit; padding-left:10px;' id='" + jsondata.Subject.subject + "' class='" + type + " subject folder'>" + img +
-                            create_label(jsondata, outlbl)+ /*(outlbl.replace(prefix, "* /")).replace(imgprefix, "") +*/ "<a style='pointer-events: none;' id='" + type + "'> [ " + fix_type(($(jsondata.Objects)))/* type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" +
+                            create_label(jsondata, outlbl,jsondata.Subject.subject,'#333333' )+ /*(outlbl.replace(prefix, "* /")).replace(imgprefix, "") +*/ "<a style='pointer-events: none;' id='" + type + "'> [ " + fix_type(($(jsondata.Objects))) + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" +
                             "<i style='pointer-events: none; padding-right:8px; padding-top:5px;' class='fa fa-minus pull-right' aria-hidden='true'></i></span><ul>");
 
 /**************************************************************************************************************/
@@ -958,7 +1021,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                 
 /**************************************************************************************************************/
 /*********************************** Object Creation **********************************************************/
-
+ 
                 if (($(jsondata.Objects).length) > 0) {
 
                     $.each(jsondata.Objects, function () {
@@ -981,10 +1044,10 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                             resource: this.uri,
                             folderpath: folderpath
                         }, function (response) {
-                                               
+                                              
                             var htmltrob;
 
-                            if ((response=="")) {
+                            if ((response=="")) {                                 
                                 htmltrob = ("<li uri=" + uri_i + " class='' id='" + literal + "'><span   style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject " + literal.replace("CRM: ", "") + "'>" + (literal.replace(prefix, "*/")) + "</span></li>");
                             }
                             else {
@@ -994,39 +1057,41 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                                     lbl = this_uri;
                                 }
                                 
-                                if (($(jsonresponse.Objects).length) > 0) {                                      
+                                if (($(jsonresponse.Objects).length) > 0) {                                     
                                     //  If the Object has only one child "type" then don't show expand button
-                                    if (type_is_unique_child($(jsonresponse.Objects))) {
+                                    if (type_is_unique_child($(jsonresponse.Objects))) {                                        
                                         htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)'  style=' color:#656666; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"
-                                                    + lbl.replace(prefix, "*/") + "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "</span></li>");
-                                    } else {                                        
-                                        htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)' style=' cursor:pointer; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'  onclick='objectToSubject(\"" + this_uri + "\"," + depth + "," + true + "," + current_depth + ",this)'>"
-                                                    + lbl.replace(prefix, "*/") + "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + /*expand_icon*/"<i style=' cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='fa fa-plus pull-right' id='add'></i>" + "</span></li>");
+                                                    +create_uri_popover(this_uri, lbl,"style='color:#313131'") +
+                                                    "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "</span></li>");
+                                    } else {    
+                                        htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)' style=' cursor:pointer; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'  onclick='objectToSubject(\"" + this_uri + "\"," + depth + "," + true + "," + current_depth + ",this)'>"+     
+                                                    create_uri_popover(this_uri, lbl,"style='color:#313131'") 
+                                                    +"<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + /*expand_icon*/"<i style=' cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='fa fa-plus pull-right' id='add'></i>" + "</span></li>");
                                     }
                                     
                                     //  If the Object has only one child "prefLabel" then don't show expand button
                                     if (prefLabel_is_unique_child($(jsonresponse.Objects))){
                                          htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)' style=' color:#656666; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"
-                                                + lbl.replace(prefix, "*/") + "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "</span></li>");
+                                                        +create_uri_popover(this_uri, lbl)                                                                                      
+                                                        + "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "</span></li>");
                                     }
                                                                                                            
                                     ////////// Dimension Fix                                                           
-                                    if (type == "E54_Dimension") {
-                                       // fix_dimension_label(jsonresponse, uri_i, type);
-                                    }
+                                    /* if (type == "E54_Dimension") {
+                                        fix_dimension_label(jsonresponse, uri_i, type);
+                                    }*/
                                     /////////// If current depth greater than six replace expand button with open in new tab
                                     if (current_depth > 39) {
-                                        htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span  style='margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"
-                                                + lbl.replace(prefix, "*/") + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "<a style='cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;'  class='fa fa-crosshairs pull-right grey-tooltip'  href='?resource=" + this_uri + "&prev_resource=" + resource + "&filename="+folderpath+"' target='_blank' data-toggle='tooltip' title='Open in new tab'  ></a>" + "</span></li>");
+                                        htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span  style='margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"                                                                 
+                                                    +create_uri_popover(this_uri, lbl,"style='color:#313131'")                                                   
+                                                    +"<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "<a style='cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;'  class='fa fa-crosshairs pull-right grey-tooltip'  href='?resource=" + this_uri + "&prev_resource=" + resource + "&filename="+folderpath+"' target='_blank' data-toggle='tooltip' title='Open in new tab'  ></a>" + "</span></li>");
                                     }
                                     
                                 }
                                 else {                                   
-                                    if (obj_type == "NOTYPE") {
- 
-                                        htmltrob = ("<li  uri=" + uri_i + " class='' id='" + literal + "'><span  oncontextmenu='rightClickMenu(this)'  style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject " /*+ literal.replace("CRM: ", "")*/ + "'>" +
-                                                ((lbl.replace(prefix, "*/")).replace("http://qudt.org/vocab/unit#", "*/")) + "</span></li>");
-
+                                    if (obj_type == "NOTYPE") {                                        
+                                        htmltrob = ("<li  uri=" + uri_i + " class='' id='" + literal + "'><span  oncontextmenu='rightClickMenu(this)'  style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject'>" +              
+                                            ((lbl.replace(prefix, "*/")).replace("http://qudt.org/vocab/unit#", "*/"))+ "</span></li>");
                                         ///////////////////////////////////////// TEXTS///////////////////////////////
                                         if ((lbl.length > 660) && (lbl.length < 1000)) {
                                             htmltrob = ("<li uri=" + uri_i + " class='' id='" + literal.replace(/'/g, "\"") + "'><span   style='color:#656666; height:inherit; margin-right:8px; padding-left:10px' class='folder subject " + "'>" +
@@ -1039,20 +1104,19 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                                         }
                                         ///////////////////////////////////////// TEXTS/////////////////////////////// 
                                     }
-                                    else {                                          
-                                            htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span style=' height:inherit; color:#656666; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"+
-                                                        (lbl.replace(prefix, "*/")) + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a></span></li>");
+                                    else {                                        
+                                            htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span style=' height:inherit; color:#656666; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"+                                                                                     
+                                            (lbl.replace(prefix, "*/")) + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a></span></li>");
                                     }                                                                                                          
                                 }
                                   
                             }
                             /***************************** circle handling ******/
                             if (($('[uri=' + uri_i + ']').length) > 0) {
-                                //  console.log('loop')
+                                //  console.log('loop')                                                                                                                                  
                                 htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)' onclick='highlight(\"" + uri_i + "\")' style=' cursor:pointer; margin-right:8px; padding-left:10px; color:#656666;' class='folder subject " + type + "'>"
-                                + ((lbl.replace("http://qudt.org/vocab/unit#","*/")).replace(prefix, "*/")) + "<a id='" + type + "'></span></li>");                                                              
+                                + ((lbl.replace("http://qudt.org/vocab/unit#","*/")).replace(prefix, "*/")) + "<a id='" + type + "'></span></li>");                                                                                 
                             }
-
                             /***************************** circle handling ******/
                            
                             ($(branches).find("#" + Id)).append(htmltrob);
@@ -1082,13 +1146,13 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                             showHide();
                             showflag = false;
 
-                            //anoigma se kathorismeno vathos
+                            //open in predefined depth
                             //alert(depth-curdepth)
                             if (depth - curdepth > 1) {
                                 //  var pp = $(htmltrob).children('span')[0];
                                 objectToSubject(this_uri, depth, true, curdepth + 1);
                             }
-//objectToSubject(this_uri); //olo to dedtro
+//objectToSubject(this_uri); //the whole tree
                         });
                     });
                 }
@@ -1109,9 +1173,7 @@ function showHide() {
    
     var preds = $('.preds_ul');
     /******************* Sort by size of list **************************/
-    
-    
-    
+            
     $(preds).each(function () {    
                 
         if(($(this).children('.show_list').attr('flag'))==='notshow'){            
@@ -1226,7 +1288,7 @@ function showHide() {
 
                 
         $("#to_Add").find('li').each(function () {
-            if ($(this).css('display') != 'none') {
+            if ($(this).css('display') !== 'none') {
                 $(this).children('span').prop('onclick',null).off('click');
                 $(this).children('span').css({'cursor' :"default"});
                 if($(this).hasClass('collapsable')){
@@ -1292,7 +1354,7 @@ function insertEntries(btn_id) {
         var node = $(this).closest("li");      
         var val = ($(node).attr('uri'));   
         
-        if(val==null){
+        if(val===null){
            var ee = $(node).first('span');
            val = ($(ee).children('span').attr('uri'));
         }
@@ -1319,9 +1381,10 @@ function insertEntries(btn_id) {
 }
 
 /********************* Search box in Modal ***********************************/
+
 $('#box').keyup(function () {
     var valThis = $(this).val().toLowerCase();
-    if (valThis == "") {
+    if (valThis === "") {
         $('.navList > li').show();
     } else {
         $('.navList > li').each(function () {
@@ -1333,15 +1396,19 @@ $('#box').keyup(function () {
 });
 
 /******************************************************************************/
+
 $("#checkAll").click(function () {
     $('input:checkbox').not(this).prop('checked', this.checked);
 });
+
 /******************************************************************************/
+
 function highlight(uri) {
-  //  alert(uri)
-    $('[uri='+uri+']').fadeOut();
-    $('[uri='+uri+']').fadeIn();
-    };        
+    $('[uri=' + uri + ']').fadeOut();
+    $('[uri=' + uri + ']').fadeIn();
+}
+;  
+    
 /*******************************************************************************/
 
 /**************************Right click Functionality***************************/
@@ -1412,13 +1479,13 @@ function highlight(uri) {
  * @param {string} a
  */
     
- function getPath(a) {
+function getPath(a) {
     var path = $(a).text();
-    var $parent = $(a).parents("li").eq(1).find("span:first");    
-   
-    if ($parent.length == 1) {
-        path = getPath($parent) + "^_^" + path;        
-    }    
+    var $parent = $(a).parents("li").eq(1).find("span:first");
+
+    if ($parent.length === 1) {
+        path = getPath($parent) + "^_^" + path;
+    }
     return path;
 }   
     
@@ -1496,3 +1563,4 @@ function rightClickMenu(value) {
         }
     });                
 };
+
