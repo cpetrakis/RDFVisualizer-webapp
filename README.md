@@ -7,7 +7,7 @@ RDF Visualizer is a tool for displaying and browsing high density of RDF data. T
 RDF Visualizer supports browsing content from:
 1. [Virtuoso](https://virtuoso.openlinksw.com) database.
 2. [Blazegraph](https://www.blazegraph.com) database. 
-3. Simple file (Has been tested with .ttl files).
+3. Simple file (has been tested with .ttl files).
 
 Further information about the tool functionalities can be found [here.](http://www.cidoc-crm.org/sites/default/files2/RDF%20visualiser.pdf)
 
