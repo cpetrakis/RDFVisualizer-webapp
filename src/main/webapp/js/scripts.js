@@ -442,7 +442,7 @@ function fix_dimension_label(json, uri, type) {
         for (var i = 0; i < vals.length; i++) {
             string = string + " " + vals[i];
         }          
-        string = string.replace("%20"," ") + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a>";
+        string = string.replace("%20"," ") + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a>";
  
         var node = $('[uri=' + uri + ']').children('span');        
         $(node).text("");
@@ -703,10 +703,11 @@ function getModel(resource) {
 
             /************************* Subject Creation **********************************/
 
-            var type = (jsondata.Subject.type).split('/').pop();                    
+            var type = (jsondata.Subject.type).split('/').pop(); 
+            
             
             htmltr = htmltr = ("<div class='triple'><li><span oncontextmenu='rightClickMenu(this)' onclick='changeIcon(this)' style='height:inherit; margin-left: 0px; padding-left:10px' uri='" + jsondata.Subject.subject.replace(/[^a-z0-9-_]+/gi, "_") + "' id='" + jsondata.Subject.subject + "' class='" + type + " subject folder'>" +
-                    remove_Url(jsondata.Subject.label) + "<a style='pointer-events: none;' id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a>"
+                    remove_Url(jsondata.Subject.label) + "<a style='pointer-events: none;' id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a>"
                     + "<i style='padding-right:8px; padding-top:5px; pointer-events: none;' class='fa fa-minus pull-right' aria-hidden='true'></i></span>");
 
             /*****************************************************************************/
@@ -816,20 +817,20 @@ function getModel(resource) {
                                     htmltrob = ("<li uri=" + clean_uri + " id='" + this_uri + "'>" + img +
                                                 "<span oncontextmenu='rightClickMenu(this)'  style='color:#656666; height:inherit;  margin-right:8px; padding-left:10px' class='folder subject " + type + "''>" +
                                                 create_label(jsonresponse,lbl,this_uri,'#333333')+ "<a id='" + type + " '> [ " +
-                                                fix_type(($(jsonresponse.Objects))) + /*type +*/ " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='' id='add'></i></span></li>");
+                                                fix_type(($(jsonresponse.Objects))) + /*type +*/ " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='' id='add'></i></span></li>");
                                 }                                                                                          
                                 else {
                                     htmltrob = ("<li uri=" + clean_uri + " id='" + this_uri + "'>" + img + 
                                                 "<span oncontextmenu='rightClickMenu(this)'  style='height:inherit; cursor:pointer;  margin-right:8px; padding-left:10px' class=' folder subject " + type + "'onclick='objectToSubject(\"" + this_uri + "\"," + (-1) + "," + (-2) + "," + (-2) + ",this)'>" +
                                                 create_label(jsonresponse, lbl, this_uri,'#333333')+ "<a id='" + type + "'> [ " +
-                                                fix_type(($(jsonresponse.Objects))) + /*type +*/ " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='fa fa-plus pull-right' id='add'></i></span></li>");
+                                                fix_type(($(jsonresponse.Objects))) + /*type +*/ " <img style='padding-bottom: 3px;' src='img/" +  type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='fa fa-plus pull-right' id='add'></i></span></li>");
                                 }                                
                                 //  If the Object has only one child "prefLabel" then don't show expand button
                                 if (prefLabel_is_unique_child($(jsonresponse.Objects)) ) {
                                     htmltrob = ("<li uri=" + clean_uri + " id='" + this_uri + "'>" + img +                                                                                                      // OBJECT MOUSOVER 
                                                 "<span oncontextmenu='rightClickMenu(this)'  style='color:#656666; height:inherit;  margin-right:8px; padding-left:10px' class='folder subject " + type + "''>" +//"<a class=grey-tooltip data-placement='auto' data-toggle='tooltip' title='" + this_uri + "'>"+
                                                  create_label(jsonresponse, lbl,this_uri) + "<a id='" + type + "'> [ " +
-                                                 fix_type(($(jsonresponse.Objects))) + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='' id='add'></i></span></li>");
+                                                 fix_type(($(jsonresponse.Objects))) + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a><i style=' padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='' id='add'></i></span></li>");
                                 }
                                 
                                 //  Fix dimension appearance                                
@@ -857,7 +858,7 @@ function getModel(resource) {
                                 }
                                 else {
                                     htmltrob = ("<li uri=" + clean_uri + " class='' id='" + this_uri + "'>" + img + "<span  style='color:#656666; margin-right:8px; padding-left:10px' class='folder subject " + type + "'>" +
-                                    lbl.replace(prefix, "*/") + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a></span></li>");
+                                    lbl.replace(prefix, "*/") + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\"/> ]</a></span></li>");
                                 }
                             }                          
                         }                        
@@ -972,7 +973,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                 }               
                 
                 var html = ("<li><span oncontextmenu='rightClickMenu(this)' uri='" + jsondata.Subject.subject.replace(/[^a-z0-9-_]+/gi, "_") + "' onclick='changeIcon(this)' style='height:inherit; padding-left:10px;' id='" + jsondata.Subject.subject + "' class='" + type + " subject folder'>" + img +
-                            create_label(jsondata, outlbl,jsondata.Subject.subject,'#333333' )+ /*(outlbl.replace(prefix, "* /")).replace(imgprefix, "") +*/ "<a style='pointer-events: none;' id='" + type + "'> [ " + fix_type(($(jsondata.Objects))) + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" +
+                            create_label(jsondata, outlbl,jsondata.Subject.subject,'#333333' )+ /*(outlbl.replace(prefix, "* /")).replace(imgprefix, "") +*/ "<a style='pointer-events: none;' id='" + type + "'> [ " + fix_type(($(jsondata.Objects))) + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" +
                             "<i style='pointer-events: none; padding-right:8px; padding-top:5px;' class='fa fa-minus pull-right' aria-hidden='true'></i></span><ul>");
 
 /**************************************************************************************************************/
@@ -1062,18 +1063,18 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                                     if (type_is_unique_child($(jsonresponse.Objects))) {                                        
                                         htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)'  style=' color:#656666; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"
                                                     +create_uri_popover(this_uri, lbl,"style='color:#313131'") +
-                                                    "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "</span></li>");
+                                                    "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" +  type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "</span></li>");
                                     } else {    
                                         htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)' style=' cursor:pointer; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'  onclick='objectToSubject(\"" + this_uri + "\"," + depth + "," + true + "," + current_depth + ",this)'>"+     
                                                     create_uri_popover(this_uri, lbl,"style='color:#313131'") 
-                                                    +"<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + /*expand_icon*/"<i style=' cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='fa fa-plus pull-right' id='add'></i>" + "</span></li>");
+                                                    +"<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + /*expand_icon*/"<i style=' cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;' class='fa fa-plus pull-right' id='add'></i>" + "</span></li>");
                                     }
                                     
                                     //  If the Object has only one child "prefLabel" then don't show expand button
                                     if (prefLabel_is_unique_child($(jsonresponse.Objects))){
                                          htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span oncontextmenu='rightClickMenu(this)' style=' color:#656666; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"
                                                         +create_uri_popover(this_uri, lbl)                                                                                      
-                                                        + "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "</span></li>");
+                                                        + "<a id='" + type + "'> [ " + fix_type(jsonresponse.Objects) /*type*/ + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "</span></li>");
                                     }
                                                                                                            
                                     ////////// Dimension Fix                                                           
@@ -1084,7 +1085,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                                     if (current_depth > 39) {
                                         htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span  style='margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"                                                                 
                                                     +create_uri_popover(this_uri, lbl,"style='color:#313131'")                                                   
-                                                    +"<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "<a style='cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;'  class='fa fa-crosshairs pull-right grey-tooltip'  href='?resource=" + this_uri + "&prev_resource=" + resource + "&filename="+folderpath+"' target='_blank' data-toggle='tooltip' title='Open in new tab'  ></a>" + "</span></li>");
+                                                    +"<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a>" + "<a style='cursor:pointer; padding-top: 5px; padding-right: 8px; margin-left: 5px;'  class='fa fa-crosshairs pull-right grey-tooltip'  href='?resource=" + this_uri + "&prev_resource=" + resource + "&filename="+folderpath+"' target='_blank' data-toggle='tooltip' title='Open in new tab'  ></a>" + "</span></li>");
                                     }
                                     
                                 }
@@ -1106,7 +1107,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                                     }
                                     else {                                        
                                             htmltrob = ("<li class=''  uri=" + uri_i + " id='" + this_uri + "'><span style=' height:inherit; color:#656666; margin-right:8px; padding-left:10px;' class='folder subject " + type + "'>"+                                                                                     
-                                            (lbl.replace(prefix, "*/")) + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a></span></li>");
+                                            (lbl.replace(prefix, "*/")) + "<a id='" + type + "'> [ " + type + " <img style='padding-bottom: 3px;' src='img/" + type.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\" /> ]</a></span></li>");
                                     }                                                                                                          
                                 }
                                   
@@ -1548,7 +1549,7 @@ function rightClickMenu(value) {
                     if (i % 2 === 0) {
                         var lbl= res[i] ;
                         if((res[i].substring(res[i].length - 1, res[i].length ))===']'){
-                            lbl = res[i].substring(0, res[i].length - 1) + "<img alt='' src='img/" + color + ".png' onerror=\"this.src='img/Other-Entities.png';\"> ]";                           
+                            lbl = res[i].substring(0, res[i].length - 1) + "<img alt='' src='img/" + color.replace(/#/g,"_") + ".png' onerror=\"this.src='img/Other-Entities.png';\"> ]";                           
                         }
                         html = html + "<li class='folder subject " + color + "' style='height:inherit; padding:0px 0px 2px 10px; margin-left: " + left + "px; width:" + right + "px; '><span>" + lbl +"</span></li>";
                     } else {
@@ -1563,4 +1564,3 @@ function rightClickMenu(value) {
         }
     });                
 };
-
