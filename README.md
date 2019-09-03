@@ -11,7 +11,7 @@ RDF Visualizer supports browsing content from:
 
 Further information about the tool functionalities can be found [here.](http://www.cidoc-crm.org/sites/default/files2/RDF%20visualiser.pdf)
 
-###Live Demo [here.](https://demos.isl.ics.forth.gr/RDFV-Demo/)###
+Live Demo [here.](https://demos.isl.ics.forth.gr/RDFV-Demo/)
 
 ### 2. Installation ###
 
