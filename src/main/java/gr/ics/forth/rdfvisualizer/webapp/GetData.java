@@ -5,15 +5,13 @@
  */
 package gr.ics.forth.rdfvisualizer.webapp;
 
-import gr.ics.forth.rdfvisualizer.api.core.impl.BlazeGraphManager;
-import gr.ics.forth.rdfvisualizer.api.core.impl.RDFfileManager;
-import gr.ics.forth.rdfvisualizer.api.core.impl.TripleStoreManager;
-import gr.ics.forth.rdfvisualizer.api.core.impl.TripleStoreManagerWorking;
-import gr.ics.forth.rdfvisualizer.api.core.utils.Triple;
+import api.core.impl.BlazeGraphManager;
+import api.core.impl.RDFfileManager;
+import api.core.impl.TripleStoreManager;
+import api.core.utils.Triple;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,7 +35,6 @@ import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.apache.commons.validator.routines.*;
 
 /**
  *
@@ -244,7 +241,7 @@ public class GetData extends HttpServlet {
         String subject = resource;
 
         //TripleStoreManager manager = new TripleStoreManager();
-        TripleStoreManagerWorking manager = new TripleStoreManagerWorking();
+        TripleStoreManager manager = new TripleStoreManager();
         manager.openConnectionToVirtuoso(db_url, db_port, db_username, db_password);
 
         subject = subject.replaceAll(" |\\r|\\n|\"", "");
