@@ -6,9 +6,9 @@
 package gr.ics.forth.rdfvisualizer.webapp;
 
 import com.google.gson.Gson;
-import gr.ics.forth.rdfvisualizer.api.core.properties.XSTREAMpropertyReader;
-import gr.ics.forth.rdfvisualizer.api.core.utils.IntPair;
-import gr.ics.forth.rdfvisualizer.api.core.utils.Prioritise;
+import api.core.properties.XSTREAMpropertyReader;
+import api.core.utils.IntPair;
+import api.core.utils.Prioritise;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
