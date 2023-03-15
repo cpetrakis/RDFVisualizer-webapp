@@ -3,25 +3,54 @@
     <head>
         <link rel="shortcut icon" href='img/fav.png' type="image/x-icon" />
         <link rel="stylesheet" href="css/page.css">
-
         <meta charset="utf-8">        
         <title>RDF Visualizer</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> <!-- Tell the browser to be responsive to screen width -->
-
         <!-- ******************* CSS *****************************-->
         <link rel="stylesheet" href="css/libs/bootstrap/css/bootstrap.min.css">  <!-- Bootstrap 3.3.5 -->
         <link rel="stylesheet" href="css/libs/font-awesome.min.css"> <!-- Font Awesome -->
         <link rel="stylesheet" href="css/libs/AdminLTE.min.css"> <!-- Theme style -->        
         <link rel="stylesheet" href="css/libs/skins/_all-skins.min.css">  
         <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> <!-- bootstrap wysihtml5 - text editor -->              
-        <link rel="stylesheet" href="plugins/jq-treeview/jquery.treeview.css"> <!-- treeview jquery -->                       
+        <link rel="stylesheet" href="plugins/jq-treeview/jquery.treeview.css"> <!-- treeview jquery -->   
+
+       
+        <link rel="stylesheet" href="plugins/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Generic page styles -->
+    <style>
+      #navigation {
+        margin: 10px 0;
+      }
+      @media (max-width: 767px) {
+        #title,
+        #description {
+          display: none;
+        }
+      }
+    </style>
+    <!-- blueimp Gallery styles -->
+    <link
+      rel="stylesheet"
+      href="https://blueimp.github.io/Gallery/css/blueimp-gallery.min.css"
+    />
+    <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+    <link rel="stylesheet" href="plugins/jquery-fileuploader/css/jquery.fileupload.css" />
+    <link rel="stylesheet" href="plugins/jquery-fileuploader/css/jquery.fileupload-ui.css" />
+    <!-- CSS adjustments for browsers with JavaScript disabled -->
+    <noscript
+      ><link rel="stylesheet" href="plugins/jquery-fileuploader/css/jquery.fileupload-noscript.css"
+    /></noscript>
+    <noscript
+      ><link rel="stylesheet" href="plugins/jquery-fileuploader/css/jquery.fileupload-ui-noscript.css"
+    /></noscript>
+        
+        
+        
+        
     </head>
-
     <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
-
         <div class="wrapper">
             <header class="main-header">
-                <!-- Logo -->
                 <a href="#" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b></b></span>
@@ -58,8 +87,8 @@
                             </div>
                         </li>
                         <li id="nav_configuration">
-                            <!--    <div class="" onclick='ShowConfiguration()' > -->
-                            <div class="">
+                            <div class="" onclick='ShowConfiguration()' > 
+                                <!--<div class=""> -->
                                 <i class="fa fa-cog"></i>  <span>Configuration</span>
                             </div>
                         </li>
@@ -79,7 +108,6 @@
                                 <li><div><i><img alt="#" style="padding-right: 5px; padding-bottom: 3px;" src="img/E53_Place.png"></i>  Places</div></li>                                
                             </ul>
                         </li>                                                                                                
-                                                                                                                                
                         <li class="treeview">
                             <a><i class="fa fa-question-circle "></i>
                                 <span>Help</span>
@@ -103,452 +131,685 @@
                             </ul>                                                    
                         </li>
                         <li><a target='_blank' href="https://github.com/cpetrakis/RDFVisualizer-webapp"><i class="fa fa-info-circle "></i> <span>About</span></a></li> 
-                        <!-- <li><a><i class="fa fa-info-circle "></i> <span>About</span></a></li> 
+                        <!-- <li><a><i class="fa fa-info-circle "></i> <span>About</span></a></li> -->
                     </ul>
                 </section>
-                <!-- /.sidebar -->
-            </aside>
-            <!-- ***************************   MODALS   **************************************-->  
-            <!--    ********************* TEXT *********************  -->
-            <div  class="modal fade" id="text_Modal" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
+                      
+                </aside>
 
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 id="text_modtitle" class="modal-title"></h4>
-                        </div> 
+                        <!-- ***************************   MODALS   **************************************-->  
+                        <!--    ********************* TEXT *********************  -->
+                        <div  class="modal fade" id="text_Modal" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
 
-                        <div class="modal-body">
-                            <div style="margin-bottom: 10px;" id="text_wraper">                  
-                            </div>                
-                        </div> 
-                        <div id="expand_list_footer0" class="modal-footer">
-                            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                            <!-- <button type="button" class="btn btn-primary">Insert selected entries to visualizer</button>-->
-                        </div>                      
-                    </div>     
-                </div>
-            </div>
-            <!--    ********************* LIST *********************  -->
-            <div  class="modal fade" id="list_showHide" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 id="text_modtitle" class="modal-title"></h4>
+                                    </div> 
 
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 id="modtitle" class="modal-title"></h4>
-                        </div> 
-                        <div class="modal-body" style="padding: 25px 31px 10px 0px; max-height: 560px;">
-                            <div style="margin-bottom: 10px;">
-                                <input style="margin-left: 64px;" type="checkbox" id="checkAll"> Select All  
-                                <input style="width:75%; margin-left: 5px;" placeholder="Search list" id="box" type="text" />
+                                    <div class="modal-body">
+                                        <div style="margin-bottom: 10px;" id="text_wraper">                  
+                                        </div>                
+                                    </div> 
+                                    <div id="expand_list_footer0" class="modal-footer">
+                                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                        <!-- <button type="button" class="btn btn-primary">Insert selected entries to visualizer</button>-->
+                                    </div>                      
+                                </div>     
                             </div>
-                            <ul id="nav" class="dropdown" style="max-height:500px;">
-                                <li class="dir">
-                                    <ul style="padding-left: 20px; list-style-type: none;" class="navList dropdown" id="to_Add"></ul>
-                                </li>
-                            </ul>
-                        </div> 
-                        <div id="expand_list_footer" class="modal-footer">
-                            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                            <!-- <button type="button" class="btn btn-primary">Insert selected entries to visualizer</button>-->
-                        </div>                      
-                    </div>     
-                </div>
-            </div>
-            <!--    ********************* ********************************  -->
-            <!--    ********************* MODAL copy to clipboard *********************  -->
-            <div class="modal fade" id="copy_to_clipboard" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div style="background-color: #D5E0C6;" class="modal-header">
+                        </div>
+                        <!--    ********************* LIST *********************  -->
+                        <div  class="modal fade" id="list_showHide" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
 
-                            <h4 class="modal-title">Successfully copied !</h4>
-                        </div>                                
-                    </div>
-                </div>     
-            </div>
-            <!--    ********************* MODAL no data *********************  -->
-            <div class="modal fade" id="noMoreData" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">No more Data</h4>
-                        </div>        
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 id="modtitle" class="modal-title"></h4>
+                                    </div> 
+                                    <div class="modal-body" style="padding: 25px 31px 10px 0px; max-height: 560px;">
+                                        <div style="margin-bottom: 10px;">
+                                            <input style="margin-left: 64px;" type="checkbox" id="checkAll"> Select All  
+                                            <input style="width:75%; margin-left: 5px;" placeholder="Search list" id="box" type="text" />
+                                        </div>
+                                        <ul id="nav" class="dropdown" style="max-height:500px;">
+                                            <li class="dir">
+                                                <ul style="padding-left: 20px; list-style-type: none;" class="navList dropdown" id="to_Add"></ul>
+                                            </li>
+                                        </ul>
+                                    </div> 
+                                    <div id="expand_list_footer" class="modal-footer">
+                                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                        <!-- <button type="button" class="btn btn-primary">Insert selected entries to visualizer</button>-->
+                                    </div>                      
+                                </div>     
+                            </div>
                         </div>
-                    </div>     
-                </div>
-            </div>
-            <!--    ********************* Insert Valid Subject *********************  -->
-            <div class="modal fade" id="invalidSubject" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Insert a valid subject</h4>
-                        </div>        
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>     
-                </div>
-            </div>
-            <!--    ********************* path of selected item *********************  -->
-            <div class="modal fade" id="path_of_selection" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Path of selected element</h4>
-                        </div> 
-                        <div id="selected_path" class="modal-body">                            
-                            <h4></h4>                                                   
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>     
-                </div>
-            </div>
-            <!--    ********************* Check properties file *********************  -->
-            <div class="modal fade" id="fix_properties_xml" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Define the location of properties.xml in config.properties file</h4>
-                        </div>                          
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>     
-                </div>
-            </div>
-            <!--    ********************* Check properties file *********************  -->
-            <div class="modal fade" id="check_configuration" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Check config.properties file</h4>
-                        </div>        
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>     
-                </div>
-            </div>
-            <!--    ********************* No label modal *********************  -->
-            <div class="modal fade" id="no_label" role="dialog">
-                <div class="modal-dialog">    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">The given subject has no label</h4>
-                        </div>        
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>     
-                </div>
-            </div>
-            <!--    ********************* MODAL thumb *********************  -->
-            <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content"> 
-                        <div class="modal-header">                            
-                            <button  type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 id="gallery_header" class="modal-title">Image Gallery</h4>
-                        </div>
-                        <div class="modal-body">                            
-                            <div id="gallery" class="carousel slide" data-interval="false">
-                                <div id="start_carusel" class="carousel-inner">
-                                    <div  class="item active">
-                                        <img alt="#" src="#" class="imagepreview" style="width: 100%;" >
-                                    </div>                                    
-                                </div>                                
-                            </div>                                                        
-                        </div>
-                    </div>
-                </div>
-            </div>                 
-            <!--***************************   HOME   **************************************-->                
-            <div id="pt-main" class="pt-perspective">
-                <div id="home" class="pt-page" >
-                    <!-- Content Wrapper. Contains page content -->
-                    <div class="content-wrapper">
-                        <!-- Content Header (Page header) -->
-                        <section class="content-header">
-                            <h1 style="font-size:18px; color: white;">Model Overview<small></small></h1>
-                            <!-- <ol class="breadcrumb">
-                                 <li><i class="fa fa-home"></i> Home</li>
-                             </ol> -->
-                        </section>
-                        <!-- Main content -->
-                        <section class="content">
-                            <!-- Small boxes (Stat box) -->                          
-                            <!-- Main row -->
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <!-- jQuery Knob -->
-                                    <div class="box box-solid">
-                                        <div class="box-header" style="margin:0px 0px -15px 15px;">                                           
-                                            <div><i class="fa fa-crosshairs"></i>
-                                                <!--<img style='margin-top: -2px;' src="img/target.png" alt="" height="14" width="14">-->
-                                                <h3 class="box-title" style="font-size: 14px;">Enter subject</h3></div>
-                                            <div class="box-tools pull-right">
-                                                <button style="visibility:hidden" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                            </div>
-                                        </div><!-- /.box-header -->
-                                        <div id="percOverview" class="box-body">
-                                            <!-- ****************************************************************************** -->
-                                            <div class='col-xs-12'>             
-                                                <form style=" margin-bottom: 5px;">
-                                                    <input style='width:100%; height:33px; background-color:#EFF6F9 ' type="text" id="resource" name="resource"/>
-                                                    <!--    <input style='margin-bottom: 4px;' class='btn btn-default'  type="button" id="SubmitBtn" value='Submit'/>          -->
-                                                </form>
-                                                <div class="configuration" style='display:none; padding:5px;'>
-                                                    <i class="material-icons">&#xe869;</i>
-                                                    <span>Choose a Template: </span>
-                                                    <span  style="margin: 0px 20px 0px 20px;">
-                                                        <select class="selectpicker btn btn-default btn-xs">
-                                                            <option>Template 1</option>
-                                                            <option>Template 2</option>
-                                                            <option>Template 3</option>
-                                                        </select>
-                                                    </span>
-                                                    <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
-                                                        <li><a tabindex="-1" href="#">Open Uri in new tab</a></li>
-                                                        <li><a tabindex="-1" href="#">Copy Uri</a></li>   
-                                                        <li class="divider"></li> 
-                                                        <li><a tabindex="-1" href="#">Get path of selected item</a></li>   
-                                                    </ul>
-                                                    <span style="display:none; margin-right: 5px ;"><button   id='expand_all' class =' iouiou btn btn-default btn-xs' onclick="Expand_All()">Expand All<i style='padding-left: 10px; ' class="fa fa-expand" aria-hidden="true"></i></button></span>
-                                                    <span style="display:none;"> <button  id='collapse_all' class ='btn btn-default btn-xs' onclick="Collapse_All()">Collapse All<i style='padding-left: 10px' class="fa fa-compress" aria-hidden="true"></i></button></span>
-                                                    <span  style="margin-left: 0px ;"> <button  class =' mark_same btn btn-default btn-xs' >Mark same instances<i style='padding-left: 10px' class="fa fa-flag" aria-hidden="true"></i></button> </span>
+                        <!--    ********************* ********************************  -->
+                        <!--    ********************* MODAL copy to clipboard *********************  -->
+                        <div class="modal fade" id="copy_to_clipboard" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div style="background-color: #D5E0C6;" class="modal-header">
 
-                                                    <input style='margin-bottom: 4px; width:18px; height:22px;' class='btn btn-default btn-xs pull-right'  type="button" id="SubmitBtn" value="">
-                                                    <i id="filterefresh" class="fa fa-refresh pull-right"></i>
-                                                    <!--   <input style='margin-bottom: 4px;' class='btn btn-default btn-xs fa fa-refresh'  type="button" id="SubmitBtn"><!-- <i class='fa fa-refresh'></i>  -->
-                                                </div>
-                                                <div id="empty_border"></div>
-                                                <div id="navigator_view" style="padding-top: 10px; display:none;">
-                                                    <div id='new_tab_buttons' style='display:none;'>
-                                                        <button style="margin-bottom:5px;"  class ='btn btn-default btn-xs' onclick="">Back to source path</button>         
-                                                        <span style="margin-left: 10px; font-size: 12px; ">View path of Subject</span>                                       
-                                                    </div> 
-                                                    <ul id="nav" class="dropdown">
-                                                        <!--  <li class="dir">  -->
-                                                        <ul class="navList dropdown filetree" id="browser" ></ul>
-                                                        <!--   </li>   -->
-                                                    </ul>        
-                                                </div>
-                                            </div><!-- /.box-body -->
-                                        </div><!-- /.box -->
-                                    </div><!-- /.col -->
+                                        <h4 class="modal-title">Successfully copied !</h4>
+                                    </div>                                
+                                </div>
+                            </div>     
+                        </div>
+                        <!--    ********************* MODAL no data *********************  -->
+                        <div class="modal fade" id="noMoreData" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">No more Data</h4>
+                                    </div>        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <!--    ********************* Insert Valid Subject *********************  -->
+                        <div class="modal fade" id="invalidSubject" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Insert a valid subject</h4>
+                                    </div>        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <!--    ********************* path of selected item *********************  -->
+                        <div class="modal fade" id="path_of_selection" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Path of selected element</h4>
+                                    </div> 
+                                    <div id="selected_path" class="modal-body">                            
+                                        <h4></h4>                                                   
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <!--    ********************* Check properties file *********************  -->
+                        <div class="modal fade" id="fix_properties_xml" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Define the location of properties.xml in config.properties file</h4>
+                                    </div>                          
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <!--    ********************* Unsupported file type *********************  -->
+                        <div class="modal fade" id="unsupported_filetype" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">The tool accepts only .ttl files</h4>
+                                    </div>                          
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                           <!--    ********************* no file selected *********************  -->
+                        <div class="modal fade" id="select_file" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">You must upload at least one file.</h4>
+                                    </div>                          
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <!--    ********************* Check properties file *********************  -->
+                        <div class="modal fade" id="check_configuration" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Check config.properties file</h4>
+                                    </div>        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <!--    ********************* No label modal *********************  -->
+                        <div class="modal fade" id="no_label" role="dialog">
+                            <div class="modal-dialog">    
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">The given subject has no label</h4>
+                                    </div>        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                        <!--    ********************* MODAL thumb *********************  -->
+                        <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content"> 
+                                    <div class="modal-header">                            
+                                        <button  type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                        <h4 id="gallery_header" class="modal-title">Image Gallery</h4>
+                                    </div>
+                                    <div class="modal-body">                            
+                                        <div id="gallery" class="carousel slide" data-interval="false">
+                                            <div id="start_carusel" class="carousel-inner">
+                                                <div  class="item active">
+                                                    <img alt="#" src="#" class="imagepreview" style="width: 100%;" >
+                                                </div>                                    
+                                            </div>                                
+                                        </div>                                                        
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">                               
-                            </div>
-                        </section><!-- /.content -->
-                    </div><!-- /.content-wrapper -->
-                </div>  
-            </div>
-            <!--*********************  CONFIGURATION *******************************-->
-            <div style="display:none;" id="configuration" class="pt-page" >                              
-                <div class="content-wrapper"> 
-                    <section class="content-header">
-                        <h1 style='font-size:18px; color: white;'>Configuration Page<small></small></h1>                            
-                    </section>
-                    <!-- Main content -->
-                    <section class="content">
-                        <!-- Small boxes (Stat box) -->                          
-                        <!-- Main row -->
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <!-- jQuery Knob -->
-                                <div class="box box-solid">
-                                    <div class="box-header">
-                                        <i class="fa fa-info-circle"></i>
-                                        <h3 class="box-title">Admin Data</h3>
-                                        <div class="box-tools pull-right">
-                                            <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                        </div>
-                                    </div><!-- /.box-header -->
-                                    <div id="percOverview" class="box-body">
-                                        <!-- <div class="col-xs-12">
-                                            <div class="box box-primary">                           
-                                                <div class="box-body">                                           
-                                                    <div class="row margin">
-                                                        <div class="col-sm-12">                                   
-                                                            <table class="table table-hover showVersions">
-                                                                <tr>
-                                                                    <th>Tree Depth</th>
-                                                                    <th><input type="text" id="tree_depth" value='1'/></th>                                                                                                                                
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>DB Url</th>
-                                                                    <th><input type="text" id="db_url" value='jdbc:virtuoso://localhost'></th>
-                                                                </tr>                                        
-                                                                <tr>
-                                                                    <th>DB Username</th>                                            
-                                                                    <th><input type="text" id="db_username" value='dba'/></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>DB Password</th>                                           
-                                                                    <th><input type="password" id="db_pswr" value='dba'/></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>DB Port</th>                                            
-                                                                    <th><input type="text" id="db_port" value='1111'/></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>File Path</th>    
-                                                                    <th><input type="text" id="filepath" value='test'/></th>       
-                                                                </tr>                                        
-                                                            </table>
+                        </div>                 
+                        <!--***************************   HOME   **************************************-->                
+                        <div id="pt-main" class="pt-perspective">
+                            <div id="home" class="pt-page" >
+                                <!-- Content Wrapper. Contains page content -->
+                                <div class="content-wrapper">
+                                    <!-- Content Header (Page header) -->
+                                    <section class="content-header">
+                                        <h1 style="font-size:18px; color: white;">Model Overview<small></small></h1>
+                                        <!-- <ol class="breadcrumb">
+                                             <li><i class="fa fa-home"></i> Home</li>
+                                         </ol> -->
+                                    </section>
+                                    <!-- Main content -->
+                                    <section class="content">
+                                        <!-- Small boxes (Stat box) -->                          
+                                        <!-- Main row -->
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <!-- jQuery Knob -->
+                                                <div class="box box-solid">
+                                                    <div class="box-header" style="margin:0px 0px -15px 15px;">                                           
+                                                        <div><i class="fa fa-crosshairs"></i>
+                                                            <!--<img style='margin-top: -2px;' src="img/target.png" alt="" height="14" width="14">-->
+                                                            <h3 class="box-title" style="font-size: 14px;">Enter subject</h3></div>
+                                                        <div class="box-tools pull-right">
+                                                            <button style="visibility:hidden" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="box-footer clearfix">
-                                                    <button onclick="admin_Configuration()" id="config_submit" class="pull-right btn btn-default">
-                                                        Submit
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>  -->
-                                    </div><!-- /.box -->
-                                </div><!-- /.col -->
-                                <!-- ********************************** LABEL Predicates ************** --> 
-                                <div class="box box-solid">
-                                    <div class="box-header">
-                                        <i class="fa fa-info-circle"></i>
-                                        <h3 class="box-title">Predicate Labels</h3>
-                                        <div class="box-tools pull-right">
-                                            <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                        </div>
-                                    </div><!-- /.box-header -->
-                                    <div id="percOverview" class="box-body">
-                                        <div class="col-xs-12">
-                                            <div class="box box-primary">                           
-                                                <div class="box-body">                                           
-                                                    <div class="row margin">
-                                                        <div class="col-sm-12"> 
-                                                            <table id="table_of_preds" class="table table-hover showVersions">                                        
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>                 
-                                                <div class="box-footer clearfix">
-                                                    <button onclick="Config_predicates()" id="get_config_predicates" class="pull-left btn btn-default">Get predicates</button>
-                                                    <button onclick="Submit_config_preds()" id="config_submit" class="pull-right btn btn-default">Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                    </div><!-- /.box -->
-                                </div><!-- /.col -->
-                                <!--    *****************************************************************    -->
-                                <div class="box box-solid">
-                                    <div class="box-header">
-                                        <i class="fa fa-info-circle"></i>
-                                        <h3 class="box-title">Predicate Priority</h3>
-                                        <div class="box-tools pull-right">
-                                            <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                                    </div><!-- /.box-header -->
+                                                    <div id="percOverview" class="box-body">
+                                                        <!-- ****************************************************************************** -->
+                                                        <div class='col-xs-12'>             
+                                                            <form style=" margin-bottom: 5px;">
+                                                                <input style='width:100%; height:33px; background-color:#EFF6F9 ' type="text" id="resource" name="resource"/>
+                                                                <!--    <input style='margin-bottom: 4px;' class='btn btn-default'  type="button" id="SubmitBtn" value='Submit'/>          -->
+                                                            </form>
+                                                            <div class="configuration" style='display:none; padding:5px;'>
+                                                                <!-- <i class="material-icons">&#xe869;</i>
+                                                               <span>Choose a Template: </span>
+                                                                <span  style="margin: 0px 20px 0px 20px;">
+                                                                    <select class="selectpicker btn btn-default btn-xs">
+                                                                        <option>Template 1</option>
+                                                                        <option>Template 2</option>
+                                                                        <option>Template 3</option>
+                                                                    </select>
+                                                                </span> -->
+                                                                <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
+                                                                    <li><a tabindex="-1" href="#">Open Uri in new tab</a></li>
+                                                                    <li><a tabindex="-1" href="#">Copy Uri</a></li>   
+                                                                    <li class="divider"></li> 
+                                                                    <li><a tabindex="-1" href="#">Get path of selected item</a></li>   
+                                                                </ul>
+                                                                <span style="display:none; margin-right: 5px ;"><button   id='expand_all' class =' iouiou btn btn-default btn-xs' onclick="Expand_All()">Expand All<i style='padding-left: 10px; ' class="fa fa-expand" aria-hidden="true"></i></button></span>
+                                                                <span style="display:none;"> <button  id='collapse_all' class ='btn btn-default btn-xs' onclick="Collapse_All()">Collapse All<i style='padding-left: 10px' class="fa fa-compress" aria-hidden="true"></i></button></span>
+                                                                <span  style="margin-left: 0px ;"> <button  class =' mark_same btn btn-default btn-xs' >Mark same instances<i style='padding-left: 10px' class="fa fa-flag" aria-hidden="true"></i></button> </span>
+
+                                                                <input style='margin-bottom: 4px; width:18px; height:22px;' class='btn btn-default btn-xs pull-right'  type="button" id="SubmitBtn" value="">
+                                                                <i id="filterefresh" class="fa fa-refresh pull-right"></i>
+                                                                <!--   <input style='margin-bottom: 4px;' class='btn btn-default btn-xs fa fa-refresh'  type="button" id="SubmitBtn"><!-- <i class='fa fa-refresh'></i>  -->
+                                                            </div>
+                                                            <div id="empty_border"></div>
+                                                            <div id="navigator_view" style="padding-top: 10px; display:none;">
+                                                                <div id='new_tab_buttons' style='display:none;'>
+                                                                    <button style="margin-bottom:5px;"  class ='btn btn-default btn-xs' onclick="">Back to source path</button>         
+                                                                    <span style="margin-left: 10px; font-size: 12px; ">View path of Subject</span>                                       
+                                                                </div> 
+                                                                <ul id="nav" class="dropdown">
+                                                                    <!--  <li class="dir">  -->
+                                                                    <ul class="navList dropdown filetree" id="browser" ></ul>
+                                                                    <!--   </li>   -->
+                                                                </ul>        
+                                                            </div>
+                                                        </div><!-- /.box-body -->
+                                                    </div><!-- /.box -->
+                                                </div><!-- /.col -->
+                                            </div>
                                         </div>
-                                    </div><!-- /.box-header -->
-                                    <div id="percOverview" class="box-body">
-                                        <div class="col-xs-12">
-                                            <div class="box box-primary">                           
-                                                <div class="box-body">                                           
-                                                    <div class="row margin">
-                                                        <div class="col-sm-12">                                                                       
-                                                        </div>
-                                                    </div>
+                                        <div class="row">                               
+                                        </div>
+                                    </section><!-- /.content -->
+                                </div><!-- /.content-wrapper -->
+                            </div>  
+                        </div>
+                        <!--*********************  CONFIGURATION *******************************-->
+                        <div style="display:none;" id="configuration" class="pt-page" >                              
+                            <div class="content-wrapper"> 
+                                <section class="content-header">
+                                    <h1 style='font-size:18px; color: white;'>Configuration Page<small></small></h1>                            
+                                </section>
+                                <!-- Main content -->
+                                <section class="content">
+                                    <!-- Small boxes (Stat box) -->                          
+                                    <!-- Main row -->
+                                    <div class="row">
+                                        <div  class="col-xs-12">  
+                                            
+                                            <div id="fileUpload_box" class="box box-solid">
+                                                <div class="box-header">
+                                                    <i class="fa fa-info-circle"></i>
+                                                    <h3 class="box-title">File Uploader</h3>
+                                                        <h3 class="box-title"> </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>                                                                                                                  
+                                                    </div>                                                    
                                                 </div>
-                                                <div class="box-footer clearfix">                      
-                                                    <button  onclick="window.open('DownloadFileServlet')" class="pull-left btn btn-default">Download file</button>                            
-                                                    <!--    <button onclick="" id="config_submit" class="pull-right btn btn-default">Submit</button> -->
+                                                <div id="percOverview1" class="box-body">
+                                                    <div class="col-xs-12">
+                                                        <div class="box box-primary">                           
+                                                            <div class="box-body">    
+
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                   
+                                            <!-- The file upload form used as target for the file upload widget -->
+                                             <form
+                                               id="fileupload"
+                                               action="https://jquery-file-upload.appspot.com/"
+                                               method="POST"
+                                               enctype="multipart/form-data"
+                                             >                                                                     
+                                                 <noscript
+                                                 ><input
+                                                   type="hidden"
+                                                   name="redirect"
+                                                   value="https://blueimp.github.io/jQuery-File-Upload/"
+                                               /></noscript>
+                                               <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                                               <div class="row fileupload-buttonbar">
+                                                 <div class="col-lg-12">
+                                                   <!-- The fileinput-button span is used to style the file input field as button -->
+                                                   <span class="btn btn-success fileinput-button">
+                                                     <i class="glyphicon glyphicon-plus"></i>
+                                                     <span>Add files...</span>
+                                                     <input type="file" name="files[]" multiple />
+                                                     <!--   <input type="file" name="file"  /> -->
+                                                   </span>
+                                                   <button type="submit" class="btn btn-primary start">
+                                                     <i class="glyphicon glyphicon-upload"></i>
+                                                     <span>Start upload</span>
+                                                   </button>
+                                                   <button type="reset" class="btn btn-danger cancel">
+                                                     <i class="glyphicon glyphicon-ban-circle"></i>
+                                                     <span>Delete data</span>
+                                                   </button>
+
+
+                                              <!--     <button type="button" class="btn btn-danger delete">
+                                                     <i class="glyphicon glyphicon-trash"></i>
+                                                     <span>Delete selected</span>
+                                                   </button> -->
+                                                  <!-- <input type="checkbox" class="toggle" />-->
+                                                   <!-- The global file processing state -->
+                                                   <span class="fileupload-process"></span>
+                                                 </div>
+                                                 <!-- The global progress state -->
+                                                 <div class="col-lg-5 fileupload-progress fade" style="height:10px;">
+                                                   <!-- The global progress bar -->
+                                                   <div
+                                                     class="progress progress-striped active"
+                                                     role="progressbar"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100"
+                                                   >
+                                                     <div
+                                                       class="progress-bar progress-bar-success"
+                                                       style="width: 0%;"
+                                                     ></div>
+                                                   </div>
+                                                   <!-- The extended global progress state -->
+                                                   <div class="progress-extended">&nbsp;</div>
+                                                 </div>
+                                               </div>
+                                               <!-- The table listing the files available for upload/download -->
+                                               <table role="presentation" class="table table-striped">
+                                                 <tbody class="files"></tbody>
+                                               </table>
+                                             </form>
+     
+                                                        <!-- The blueimp Gallery widget -->
+                                                      <div
+                                                        id="blueimp-gallery"
+                                                        class="blueimp-gallery blueimp-gallery-controls"
+                                                        aria-label="image gallery"
+                                                        aria-modal="true"
+                                                        role="dialog"
+                                                        data-filter=":even"
+                                                      >
+                                                        <div class="slides" aria-live="polite"></div>
+                                                        <h3 class="title"></h3>
+                                                        <a
+                                                          class="prev"
+                                                          aria-controls="blueimp-gallery"
+                                                          aria-label="previous slide"
+                                                          aria-keyshortcuts="ArrowLeft"
+                                                        ></a>
+                                                        <a
+                                                          class="next"
+                                                          aria-controls="blueimp-gallery"
+                                                          aria-label="next slide"
+                                                          aria-keyshortcuts="ArrowRight"
+                                                        ></a>
+                                                        <a
+                                                          class="close"
+                                                          aria-controls="blueimp-gallery"
+                                                          aria-label="close"
+                                                          aria-keyshortcuts="Escape"
+                                                        ></a>
+                                                        <a
+                                                          class="play-pause"
+                                                          aria-controls="blueimp-gallery"
+                                                          aria-label="play slideshow"
+                                                          aria-keyshortcuts="Space"
+                                                          aria-pressed="false"
+                                                          role="button"
+                                                        ></a>
+                                                        <ol class="indicator"></ol>
+                                                      </div>
+                                                                   
+      
+      
+      
+      
+                                                                <div id="dataTable" style="display:none; ">                      
+                                                                    <table  id="subjects_table" class="table table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Label</th>
+                                                                                <th scope="col">Uri</th>
+                                                                                <th scope="col"></th>
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="subjects_content">
+
+                                                                        </tbody>     
+
+                                                                    </table>
+                                                                </div>               
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="box-footer clearfix">
+                                                                <button style="display: none;" onclick="visualizeSelected()" id="config_submit" class="pull-right btn btn-default">
+                                                                    Visualize Selected
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                             
+                                            <!-- jQuery Knob -->
+                                            <div class="box box-solid">
+                                                <div class="box-header">
+                                                    <i class="fa fa-info-circle"></i>
+                                                    <h3 class="box-title">URI Configuration</h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div><!-- /.box-header -->
+                                                <div id="percOverview2" class="box-body">
+                                                    <div class="col-xs-12">
+                                                        <div class="box box-primary">                           
+                                                            <div class="box-body">                                           
+                                                                <div class="row margin">
+                                                                    <div class="col-sm-12">                                   
+                                                                        <table class="table table-hover">
+                                                                            <tr>
+                                                                                <th>Schema Label URI</th>
+                                                                                <th><input style="width:100%;" type="text" id="schema_label" value=''/></th>                                                                                                                                
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Pref Label URI</th>
+                                                                                <th><input style="width:100%;" type="text" id="pref_labels" value=''></th>
+                                                                            </tr> 
+
+                                                                            <tr>
+                                                                                <th>Type Label URI</th>
+                                                                                <th><input style="width:100%;" type="text" id="type_labels_uri" value=''></th>
+                                                                            </tr> 
+
+                                                                            <tr>
+                                                                                <th>Prefix URI</th>
+                                                                                <th><input style="width:100%;" type="text" id="prefix" value=''></th>
+                                                                            </tr>  
+
+                                                                            <tr>
+                                                                                <th>Image type uri URI</th>
+                                                                                <th><input style="width:100%;" type="text" id="image_type_prefix" value=''></th>
+                                                                            </tr>  
+                                                                            <tr>
+                                                                                <th>Image prefix</th>
+                                                                                <th><input style="width:100%;" type="text" id="image_prefix" value=''></th>
+                                                                            </tr>  
+                                                                             <tr>
+                                                                                <th>Show incoming links</th>
+                                                                               
+                                                                                <th>
+                          
+                
+                <select class="form-control" style="width: 100%;" id="show_incoming_links">
+                  <option value="false" >false</option>
+                  <option value="true">true</option>
+                  
+                </select>
+                </th>
+                                                                            </tr> 
+
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="box-footer clearfix">
+                                                                <button onclick="submitURIS()" class="pull-right btn btn-default">
+                                                                    Submit
+                                                                </button>
+
+                                                                <button onclick="resetURIS()" class="pull-left btn btn-default">
+                                                                    Reset
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div> 
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!-- /.box -->
-                                </div><!-- /.col -->
-                                <!-- *************************************************************** -->
-                                <div class="box box-solid">
-                                    <div class="box-header">
-                                        <i class="fa fa-info-circle"></i>
-                                        <h3 class="box-title">Table of Templates</h3>
-                                        <div class="box-tools pull-right">
-                                            <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                        </div>
-                                    </div><!-- /.box-header -->
-                                    <div id="percOverview" class="box-body">
-                                        <div class="col-xs-12">
-                                            <div class="box box-primary">                           
-                                                <div class="box-body">                                           
-                                                    <div class="row margin">
-                                                        <div class="col-sm-12"> 
-                                                            <table id="table_of_preds" class="table table-hover showVersions">
-                                                                <tr>
-                                                                    <th>#</th>                                            
-                                                                    <th>Template Name</th>
-                                                                    <th>Author</th>         
-                                                                    <th>Related Ontology</th>
-                                                                    <th>Related Database</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>#</th>                                            
-                                                                    <th>Template Name</th>
-                                                                    <th>Author</th>         
-                                                                    <th>Related Ontology</th>
-                                                                    <th>Related Database</th>
-                                                                </tr>
-                                                                <tr>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>                 
-                                                <div class="box-footer clearfix">                   
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.box -->
-                                </div><!-- /.col -->
-                                <!--    *****************************************************************    -->
+                                    </div>
                             </div>
                         </div>
-                        <div class="row">                               
+                            <footer  style=" border-top:none; color:#ffffff; background-color: #222d32;" class="main-footer">               
+                                <strong>System version 2.2-SNAPSHOT <a target="_blank" style="color:#ffffff" href="changes.html">(2023-03-15T15:40)</a></strong>
+                            </footer> 
                         </div>
-                    </section>            
-                </div>  
-            </div>   
-          <footer  style=" border-top:none; color:#ffffff; background-color: #222d32;" class="main-footer">               
-              <strong>System version 2.1-SNAPSHOT <a target="_blank" style="color:#ffffff" href="changes.html">(2021-01-04T115:40)</a></strong>
-           </footer>           
-        </div><!-- ./wrapper -->
-        <!-- TEMPLATE JAVASCRIPT LIBRARIES -->
-        <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script> <!-- jQuery 2.1.4 -->
-        <script src="js/libs/jquery-ui.min.js"></script> <!-- jQuery UI 1.11.4 -->        
-        <script src="css/libs/bootstrap/js/bootstrap.min.js"></script> <!-- Bootstrap 3.3.5 -->
-        <script src="plugins/knob/jquery.knob.js"></script> <!-- jQuery Knob Chart -->
-        <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script> <!-- Bootstrap WYSIHTML5 -->
-        <script src="js/libs/template/app.min.js"></script>  <!-- AdminLTE App -->              
-        <script type="text/javascript" src="js/scripts.js"></script>         
-        <script src="plugins/jq-treeview/jquery.treeview.js"></script>  <!-- treeview.js -->
-        <script src="plugins/jq-treeview/jquery.treeview.edit.js"></script>                      
+                            <!-- ./wrapper -->
+                            <!-- TEMPLATE JAVASCRIPT LIBRARIES -->       
+                            <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script> <!-- jQuery 2.1.4 -->
+                            <script src="plugins/jquery-ui/jquery-ui.min.js"></script> <!-- jQuery UI 1.11.4 -->        
+                            <script src="css/libs/bootstrap/js/bootstrap.min.js"></script> <!-- Bootstrap 3.3.5 -->
+                            <script src="plugins/knob/jquery.knob.js"></script> <!-- jQuery Knob Chart -->
+                            <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script> <!-- Bootstrap WYSIHTML5 -->
+                            <script src="plugins/admin-LTE/app.min.js"></script>  <!-- AdminLTE App -->              
+   
+                            <script src="plugins/datatables/datatables.net/js/jquery.dataTables.min.js"></script>
+                            <script src="plugins/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+                            
+                            <script type="text/javascript" src="js/scripts.js"></script>         
+                            <script src="plugins/jq-treeview/jquery.treeview.js"></script>  <!-- treeview.js -->
+                            <script src="plugins/jq-treeview/jquery.treeview.edit.js"></script>      
+
+    <!-- The template to display files available for upload -->
+    <script id="template-upload" type="text/x-tmpl">
+      {% for (var i=0, file; file=o.files[i]; i++) { %}
+          <tr class="template-upload fade{%=o.options.loadImageFileTypes.test(file.type)?' image':''%}">
+              <td>
+               <input type="checkbox" class="toggle" />
+                  <span class="preview"></span>
+              </td>
+              <td>
+
+                  <p class="name">{%=file.name%}</p>
+<strong class="error text-danger"></strong>
+</td>
+<td>
+    <p class="size">Processing...</p>
+    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+</td>
+<td>
+    {% if (!o.options.autoUpload && o.options.edit && o.options.loadImageFileTypes.test(file.type)) { %}
+    <button class="btn btn-success edit" data-index="{%=i%}" disabled>
+        <i class="glyphicon glyphicon-edit"></i>
+        <span>Edit</span>
+    </button>
+                  {% } %}
+    {% if (!i && !o.options.autoUpload) { %}
+    <button class="btn btn-primary start" disabled>
+        <i class="glyphicon glyphicon-upload"></i>
+        <span>Upload</span>
+    </button>
+                  {% } %}
+    {% if (!i) { %}
+    <button class=" btn btn-warning cancel">
+        <i class="glyphicon glyphicon-ban-circle"></i>
+        <span>Cancel</span>                          
+    </button>
+                  
+                  {% } %}
+</td>
+</tr>
+      {% } %}
+    </script>
+    <!-- The template to display files available for download -->
+    <script id="template-download" type="text/x-tmpl">
+      {% for (var i=0, file; file=o.files[i]; i++) { %}
+<tr class="template-download fade{%=file.thumbnailUrl?' image':''%}">
+    <td>
+
+        <input type="checkbox" class="toggle" />
+        <span class="preview">
+            {% if (file.thumbnailUrl) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+            {% } %}
+        </span>
+    </td>
+    <td>
+        <p class="name">
+            {% if (file.url) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                      {% } else { %}
+            <span>{%=file.name%}</span>
+                      {% } %}
+        </p>
+        {% if (file.error) { %}
+        <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+                  {% } %}
+    </td>
+    <td>
+        <span class="size">{%=o.formatFileSize(file.size)%}</span>
+    </td>
+    <td>
+        {% if (file.deleteUrl) { %}
+        <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+            <i class="glyphicon glyphicon-trash"></i>
+            <span>Delete</span>
+        </button>
+        <input type="checkbox" name="delete" value="1" class="toggle">
+        {% } else { %}
+        <button class="btn btn-warning cancel">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+            <span>Cancel</span>
+        </button>
+
+        {% } %}
+    </td>
+</tr>
+      {% } %}
+    
+    </script>
+   
+    <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+    <script src="plugins/jquery-fileuploader/js/vendor/jquery.ui.widget.js"></script>
+    <!-- The Templates plugin is included to render the upload/download listings -->
+    <script src="https://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+    <script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+    <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+    <script src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+    <!-- blueimp Gallery script -->
+    <script src="https://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+    <script src="plugins/jquery-fileuploader/js/jquery.iframe-transport.js"></script>
+    <!-- The basic File Upload plugin -->
+    <script src="plugins/jquery-fileuploader/js/jquery.fileupload.js"></script>
+    <!-- The File Upload processing plugin -->
+    <script src="plugins/jquery-fileuploader/js/jquery.fileupload-process.js"></script>
+    <!-- The File Upload image preview & resize plugin -->
+    <script src="plugins/jquery-fileuploader/js/jquery.fileupload-image.js"></script>
+    <!-- The File Upload audio preview plugin -->
+    <script src="plugins/jquery-fileuploader/js/jquery.fileupload-audio.js"></script>
+    <!-- The File Upload video preview plugin -->
+    <script src="plugins/jquery-fileuploader/js/jquery.fileupload-video.js"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="plugins/jquery-fileuploader/js/jquery.fileupload-validate.js"></script>
+    <!-- The File Upload user interface plugin -->
+    <script src="plugins/jquery-fileuploader/js/jquery.fileupload-ui.js"></script>
+    <!-- The main application script -->
+    <script src="plugins/jquery-fileuploader/js/demo.js"></script>
+
     </body>
 </html>
