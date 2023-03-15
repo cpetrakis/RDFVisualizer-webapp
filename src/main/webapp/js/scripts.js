@@ -16,6 +16,20 @@
  
  */
 
+function visualizeSelected(){
+      
+   if($('.toggle').length==0){ 
+         $('#select_file').modal('show');
+   }else {
+       
+    var file =  JSON.parse(localStorage.getItem('selected_filename')).filename;
+    console.log(file)
+    localStorage.setItem("filename", file);  
+    ShowHome();
+   }
+  
+}
+
 var prefix          = "";
 var imgprefix       = "";
 var pref_Label_uri  = "";
@@ -23,19 +37,186 @@ var type_Label_uri  = "";
 var schema_Label_uri= "";
 var image_type_uri  = "";
 var tree_depth      = "";
+var show_incoming_links ="";
 
-/*************** Get Configuration properties from config.properties file ******/
+
+/*** Set User configured URIS and labels on local Storage ***/
+
+function submitURIS(){
+    
+    var jsonURIS = new Object();
+    
+    jsonURIS['schema_Label_uri']    = $('#schema_label').val();
+    jsonURIS['pref_Label_uri']      = $('#pref_labels').val();
+    jsonURIS['type_Label_uri']      = $('#type_labels_uri').val();
+    jsonURIS['prefix']              = $('#prefix').val();
+    jsonURIS['image_type_uri']      = $('#image_type_prefix').val();
+    jsonURIS['imgprefix']           = $('#image_prefix').val();
+    jsonURIS['show_incoming_links'] = $('#show_incoming_links').find(":selected").val();
+    
+    localStorage.setItem('URIS_json', JSON.stringify(jsonURIS));
+    console.log(jsonURIS);
+    location.reload();
+       
+}
+
+/*** Reset Configuration properties from config.properties  ***/
+
+function resetURIS(){
+    $.post("GetPropertiesValues", {
+    }, function (response) {
+        var json= JSON.parse(response);        
+            console.log('URIS reset...');
+           // console.log(json);
+            prefix = json.prefix;
+            imgprefix = json.imgprefix;
+            pref_Label_uri = json.pref_Label_uri;
+            type_Label_uri = json.type_Label_uri;
+            schema_Label_uri = json.schema_Label_uri;
+            image_type_uri = json.image_type_uri;
+            tree_depth = json.tree_depth;  
+            show_incoming_links = json.show_incoming_links;
+          
+            $('#show_incoming_links').find('option[value="'+json.show_incoming_links+'"]').attr("selected",true);
+            $('#schema_label').val(json.schema_Label_uri);
+            $('#pref_labels').val(json.pref_Label_uri);
+            $('#type_labels_uri').val(json.type_Label_uri);
+            $('#prefix').val(json.prefix);
+            $('#image_type_prefix').val(json.image_type_uri);
+            $('#image_prefix').val(json.imgprefix);
+                      
+            
+            localStorage.setItem('URIS_json', JSON.stringify(json));
+    }); 
+}
+function visualizeThis(subject){
+   
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    window.location =  url.origin + url.pathname +'?resource='+subject;
+    
+}
+
+
+    
+    var subjectTable =   $('#subjects_table').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    });
+
+
+function createSubjectTable(data) {
+    subjectTable.clear()
+    if (data) {
+        $.each(data, function (key, value) {
+
+            subjectTable.row.add([key, value, `<button onclick="visualizeThis('` + value + `')">Visualize</button></th>`]);
+            // html = html+ `<tr> <th>`+key+`</th>
+            //                <th>`+value+`</th>    
+            //                <th><button onclick="visualizeThis('`+value+`')">Visualize</button></th> </tr>`;
+        });
+        subjectTable.draw();
+        //$('#subjects_content').append(html);
+        $('#dataTable').show();
+    }
+}
+
+function showSubjects(file) {
+
+    $.post("GetAllSubjects", {
+        resource: "",
+        folderpath: file,
+        schema_Label_uri: schema_Label_uri,
+        pref_Label_uri: pref_Label_uri
+
+    }, function (response) {
+        localStorage.setItem('selected_subjectsToshow', (response));
+        createSubjectTable(JSON.parse(response));
+      
+    });
+
+}
+
+/*** Get Configuration properties from config.properties file or localstorage from user ***/
 
 $.post("GetPropertiesValues", {
     }, function (response) {
         var json= JSON.parse(response);        
-        prefix          = json.prefix;
-        imgprefix       = json.imgprefix;
-        pref_Label_uri  = json.pref_Label_uri;
-        type_Label_uri  = json.type_Label_uri;
-        schema_Label_uri= json.schema_Label_uri;
-        image_type_uri  = json.image_type_uri;  
-        tree_depth      = json.tree_depth;       
+      
+        if (json.database !== "file") {
+         $('#fileUpload_box').hide();
+         } else {
+             $('#fileUpload_box').show();
+         }
+       
+        if (!localStorage.getItem('URIS_json')){
+            console.log('we DONT have configuration');
+          //  console.log(json);
+            prefix = json.prefix;
+            imgprefix = json.imgprefix;
+            pref_Label_uri = json.pref_Label_uri;
+            type_Label_uri = json.type_Label_uri;
+            schema_Label_uri = json.schema_Label_uri;
+            image_type_uri = json.image_type_uri;
+            tree_depth = json.tree_depth;       
+            show_incoming_links = json.show_incoming_links;
+           
+
+            $('#show_incoming_links').find('option[value="'+json.show_incoming_links+'"]').attr("selected",true);            
+            $('#schema_label').val(json.schema_Label_uri);
+            $('#pref_labels').val(json.pref_Label_uri);
+            $('#type_labels_uri').val(json.type_Label_uri);
+            $('#prefix').val(json.prefix);
+            $('#image_type_prefix').val(json.image_type_uri);
+            $('#image_prefix').val(json.imgprefix);
+            localStorage.setItem('URIS_json', JSON.stringify(json));
+            console.log('initial values stored!');
+           
+        }else {
+            var configuredJson= JSON.parse(localStorage.getItem('URIS_json')); 
+            console.log('we have configuration');
+           
+            prefix = configuredJson.prefix;
+            imgprefix = configuredJson.imgprefix;
+            pref_Label_uri = configuredJson.pref_Label_uri;
+            type_Label_uri = configuredJson.type_Label_uri;
+            schema_Label_uri = configuredJson.schema_Label_uri;
+            image_type_uri = configuredJson.image_type_uri;
+            show_incoming_links = configuredJson.show_incoming_links;          
+            tree_depth = 0;  
+            
+            $('#show_incoming_links').find('option[value="'+configuredJson.show_incoming_links+'"]').attr("selected",true);                      
+            $('#schema_label').val(configuredJson.schema_Label_uri);
+            $('#pref_labels').val(configuredJson.pref_Label_uri);
+            $('#type_labels_uri').val(configuredJson.type_Label_uri);
+            $('#prefix').val(configuredJson.prefix);
+            $('#image_type_prefix').val(configuredJson.image_type_uri);
+            $('#image_prefix').val(configuredJson.imgprefix);
+                    
+        }
+        
+        /*************** Call getModel fucntion with given resource *******************/
+ 
+        if (!(_GET.resource === undefined)) {    
+            $('#resource').val(_GET.resource); 
+            getModel(_GET.resource.replace(/ /g, '%20'));
+        }
+        
+        /**
+         * @summary Manual Subject Uri
+         */
+
+        $(document).ready(function () {
+            $('#SubmitBtn').click(function () {
+                getModel(($('#resource').val()));
+            });
+        });
+
+        
     });
 
 /*********************** Get Subject Uri from link****************************/
@@ -52,15 +233,10 @@ var _GET = (function () {
 
 if (!(_GET.filename === undefined)) {
    // var folderpath = _GET.filename;   
-    localStorage.setItem("filename", _GET.filename);         
+    localStorage.setItem("filename", _GET.filename);      
 }
 
-/*************** Call getModel fucntion with given resource *******************/
 
-if (!(_GET.resource === undefined)) {    
-    $('#resource').val(_GET.resource);
-    getModel(_GET.resource.replace(/ /g, '%20'));
-}
 
 /*********** Show previous tab button (open in new tab function) **************/
 
@@ -83,16 +259,6 @@ $("#resource").keyup(function (event) {
 });
 
 /******************************************************************************/
-
-/**
- * @summary Manual Subject Uri
- */
-
-$(document).ready(function () {          
-    $('#SubmitBtn').click(function () {          
-        getModel(($('#resource').val()));        
-    });
-});
 
 
 /************************* Remove url from string******************************/
@@ -127,6 +293,15 @@ function ShowConfiguration() {
     $('.active').removeClass('active');
     $('#nav_configuration').addClass('active');
     $('#configuration').fadeIn();
+    
+    if(JSON.parse(localStorage.getItem("selected_subjectsToshow"))){
+        // createSubjectTable(localStorage.getItem("selected_subjectsToshow"));
+    }
+    
+  
+    createSubjectTable(JSON.parse(localStorage.getItem("selected_subjectsToshow")));
+   console.log(JSON.parse(localStorage.getItem("selected_subjectsToshow")))
+    
 }
 /************************* Show home page**************************************/
 function ShowHome() {
@@ -619,7 +794,9 @@ function prefLabel_is_unique_child(json) {
 
 function getModel(resource) {
     
-    var folderpath = localStorage.getItem("filename"); // get filename if exists from localstorage             
+    var folderpath = localStorage.getItem("filename"); // get filename if exists from localstorage  
+    
+    
           
     $(".triple").remove();
     var depth = tree_depth; // get value from config.properties file
@@ -632,9 +809,13 @@ function getModel(resource) {
    
     $.post("GetData", {
         resource: resource,
-        folderpath: folderpath
-    }, function (response) {
+        folderpath: folderpath,
+        schema_Label_uri : schema_Label_uri,
+        pref_Label_uri : pref_Label_uri,
+        show_incoming_links :show_incoming_links
         
+    }, function (response) {
+       // console.log(JSON.parse(response));
         if ((response=="")) {
             $("#invalidSubject").modal();
             return;
@@ -645,7 +826,7 @@ function getModel(resource) {
         
         var jsondata = JSON.parse(response);
         
-  //      console.log(jsondata);
+        
     
         var htmltr = "";
 
@@ -779,7 +960,11 @@ function getModel(resource) {
 
                     $.post("GetData", {
                         resource: this.uri,
-                        folderpath: folderpath
+                        folderpath: folderpath,
+                        schema_Label_uri : schema_Label_uri,
+                        pref_Label_uri : pref_Label_uri, 
+                        show_incoming_links :show_incoming_links
+
                     }, function (response) {
 
                         var htmltrob;
@@ -918,10 +1103,17 @@ function getModel(resource) {
 function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
     
     var folderpath = localStorage.getItem("filename");
-
+    var parentNode = $(document.getElementById(resource)).parent();
+    var parentProperty = ($(parentNode).parent().find('.preds_ul').attr('id'));
+   //console.log($(parentNode).parent().find('.preds_ul').attr('id'));
+   
     $.post("GetData", {
         resource: resource,
-        folderpath: folderpath
+        folderpath: folderpath,
+        schema_Label_uri : schema_Label_uri,
+        pref_Label_uri : pref_Label_uri,
+        show_incoming_links : show_incoming_links,
+        parentProperty : parentProperty
     }, function (response) {
 
         var jsondata = JSON.parse(response);
@@ -1039,11 +1231,15 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                         var obj_type = this.type;  
                         var invert = this.invert;
                         var prd_uri=this.predicate_uri;
-                        
-
+         
+                     
                         $.post("GetData", {
                             resource: this.uri,
-                            folderpath: folderpath
+                            folderpath: folderpath,
+                            schema_Label_uri : schema_Label_uri,
+                            pref_Label_uri : pref_Label_uri,
+                            show_incoming_links: show_incoming_links,
+                            parentProperty : parentProperty
                         }, function (response) {
                                               
                             var htmltrob;
@@ -1512,8 +1708,10 @@ function rightClickMenu(value) {
                 id = $(value).parent('li').attr('id');
             }
 
-            if (selectedMenu.text() === "Open Uri in new tab") {               
-                window.open(id);
+            if (selectedMenu.text() === "Open Uri in new tab") {
+                var url_string = window.location.href;
+                var url = new URL(url_string);
+                window.open(url.origin + url.pathname +"?resource="+ id);
             }
             else if (selectedMenu.text() === "Copy Uri") {
                 var aux = document.createElement("input");
