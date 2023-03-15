@@ -21,6 +21,14 @@
         <servlet-name>GetPropertiesValues</servlet-name>
         <servlet-class>gr.ics.forth.rdfvisualizer.webapp.GetPropertiesValues</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-class>gr.ics.forth.rdfvisualizer.webapp.FileUploadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetAllSubjects</servlet-name>
+        <servlet-class>gr.ics.forth.rdfvisualizer.webapp.GetAllSubjects</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetData</servlet-name>
         <url-pattern>/GetData</url-pattern>
@@ -44,6 +52,14 @@
     <servlet-mapping>
         <servlet-name>GetPropertiesValues</servlet-name>
         <url-pattern>/GetPropertiesValues</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <url-pattern>/FileUploadServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAllSubjects</servlet-name>
+        <url-pattern>/GetAllSubjects</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
