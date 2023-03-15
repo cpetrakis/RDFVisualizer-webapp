@@ -337,6 +337,8 @@ public class BlazeGraphManager {
         return outgoingLinks;
     }
 
+    
+    
     public List<String> returnSubjects(String namedGraph) throws RepositoryException, MalformedQueryException, QueryEvaluationException, Exception {
 
         List<String> subjects = new ArrayList<>();
