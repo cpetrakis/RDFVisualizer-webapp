@@ -26,6 +26,7 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
+import org.json.JSONObject;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
@@ -45,6 +46,7 @@ public class RDFfileManager {
         model.read(targetStream, null, rdfFormat);
         this.model = model;
     }
+    
 
     public ResultSet query(String sparqlQuery) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
 
@@ -101,6 +103,7 @@ public class RDFfileManager {
 
     public String selectLabels(String resource, String labelProperty) {
         String queryString = "Select ?label where {<" + resource + "> <" + labelProperty + "> ?label}";
+                             
         return queryString;
     }
 
@@ -181,9 +184,9 @@ public class RDFfileManager {
 
     }
 
-    public String selectAllIncomingWithLabelsAndTypes(String resource, Set<String> labelProperties, String graph) {
+    public String selectAllIncomingWithLabelsAndTypes(String resource, Set<String> labelProperties, String graph, List<String> urisToExclude) {
         String labelPropertiesParam = "";
-
+        //System.out.println(urisToExclude);
         Iterator<String> iterator = labelProperties.iterator();
         while (iterator.hasNext()) {
             String labelProperty = iterator.next();
@@ -203,8 +206,15 @@ public class RDFfileManager {
                 + labelPropertiesParam + "  ?slabel .\n"
                 + "OPTIONAL {?p " + labelPropertiesParam + " ?plabel }.\n"
                 + "OPTIONAL {?o " + labelPropertiesParam + "  ?olabel }.\n"
-                + "OPTIONAL {?o <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?otype} .\n"
-                + "} \n"
+                + "OPTIONAL {?o <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?otype} .\n";
+        if(!urisToExclude.isEmpty()){
+            queryString+="FILTER( ";
+            for(String excludedUri : urisToExclude){
+                queryString+="?p!=<"+excludedUri+"> &&";
+            }
+            queryString=queryString.substring(0,queryString.length()-3)+")";
+        }
+        queryString+="} \n"
                 + "UNION\n"
                 + "{ \n"
                 + "?o ?p <" + resource + "> .\n"
@@ -214,8 +224,52 @@ public class RDFfileManager {
                 + " OPTIONAL{?o " + labelPropertiesParam + "  ?olabel }.\n"
                 + "OPTIONAL {?p " + labelPropertiesParam + "  ?plabel }.\n"
                 + "  \n"
-                + "FILTER(isLiteral(?o))\n"
-                + "} }\n";
+                + "FILTER(isLiteral(?o))\n";
+        if(!urisToExclude.isEmpty()){
+            queryString+="FILTER( ";
+            for(String excludedUri : urisToExclude){
+                queryString+="?p!=<"+excludedUri+"> &&";
+            }
+            queryString=queryString.substring(0,queryString.length()-3)+")";
+        }
+        queryString+="} "
+                + "}\n";
+        
+        
+        /* String queryString
+                = "Select * from <" + graph + "> \n"
+                + "where\n"
+                + "{ {\n"
+                + " ?o ?p <" + resource + ">.\n"
+                + "<" + resource + ">  rdf:type ?stype .\n"
+                + "<" + resource + ">  \n"
+                + labelPropertiesParam + "  ?slabel .\n"
+                + "OPTIONAL {?p " + labelPropertiesParam + " ?plabel }.\n"
+                + "OPTIONAL {?o " + labelPropertiesParam + "  ?olabel }.\n"
+                + "OPTIONAL {?o rdf:type ?otype} .\n";
+
+        for (int i = 0; i < urisToExclude.size(); i++) {
+            queryString += " FILTER (?p!= <" + urisToExclude.get(i) + "> ) \n ";
+        }
+
+        queryString += "} \n"
+                + "UNION\n"
+                + "{ \n"
+                + "?o ?p <" + resource + "> .\n"
+                + "<" + resource + ">  rdf:type ?stype .\n"
+                + "<" + resource + ">  \n"
+                + labelPropertiesParam + "  ?slabel .\n"
+                + " OPTIONAL{?o " + labelPropertiesParam + "  ?olabel }.\n"
+                + "OPTIONAL {?p " + labelPropertiesParam + "  ?plabel }.\n"
+                + "  \n"
+                + "FILTER(isLiteral(?o))\n";
+
+        for (int i = 0; i < urisToExclude.size(); i++) {
+            queryString += " FILTER (?p!= <" + urisToExclude.get(i) + "> ) \n ";
+        }
+
+        queryString += "} }\n";*/
+        
         return queryString;
     }
 
@@ -259,9 +313,14 @@ public class RDFfileManager {
         return queryString;
     }
 
-    public String selectLabel(String resource, String labelProperty) {
-        String queryString = "Select ?label where {<" + resource + "> <" + labelProperty + "> ?label .\n"
-                + " }";
+    public String selectLabel(String resource, Set<String> labelProperties) {
+        String queryString = "Select ?label where {<" + resource + "> ?label_property ?label .\n"
+                +"FILTER( ";
+        for(String labelProperty : labelProperties){
+            queryString+="?label_property=<"+labelProperty+"> || ";
+        }
+        queryString=queryString.substring(0,queryString.length()-3)+") }";
+       
         return queryString;
     }
 
@@ -271,17 +330,21 @@ public class RDFfileManager {
         return queryString;
     }
 
-    public String returnLabel(String resource, String labelProperty) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    public String returnLabel(String resource, Set<String> labelProperties) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
 
-        String query = selectLabel(resource, labelProperty);
+        String query = selectLabel(resource, labelProperties);
         ResultSet sparqlResults = query(query);
         String label = "";
 
         for (; sparqlResults.hasNext();) {
             QuerySolution soln = sparqlResults.nextSolution();
-            label = soln.get("label").toString();
+            label += soln.get("label").toString()+",";
+          //  label = label +','+soln.get("label").toString();
         }
-
+        if(label.endsWith(",")){
+            label=label.substring(0,label.length()-1);
+        }
+    
         return label;
     }
 
@@ -314,6 +377,21 @@ public class RDFfileManager {
         }
         return type;
     }
+    /////////////////////////////////
+    
+      public JSONObject returnAllSubjectsWithLabes (String schema_Label_uri) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+
+        String query = "select * where {?s <"+schema_Label_uri+"> ?p .} ";
+        ResultSet sparqlResults = query(query);
+        JSONObject json = new JSONObject();
+
+        for (; sparqlResults.hasNext();) {
+            QuerySolution soln = sparqlResults.nextSolution();           
+            json.put(soln.get("p").toString(), soln.get("s").toString());
+        }
+        return json;
+    }
+    
 
 //    public Map<String,List<String>> returnOutgoingLinks(String resource) throws RepositoryException, MalformedQueryException, QueryEvaluationException
 //    {
@@ -402,11 +480,12 @@ public class RDFfileManager {
 
             String key_uri = soln.get("p").toString();
             String key_label = "NOLABEL";
-            // System.out.println("KEY_URI"+key_uri);
+            
             if (soln.get("plabel") != null) {
-                key_label = soln.get("plabel").toString();
+                key_label = soln.get("plabel").toString();              
             }
-
+          
+                
             String key_type = "NOTYPE";
             mapKey.setSubject(key_uri);
             mapKey.setLabel(key_label);
@@ -419,16 +498,15 @@ public class RDFfileManager {
             if (soln.get("olabel") != null) {
                 value_label = soln.get("olabel").toString();
             }
-
+            
             if (soln.get("otype") != null) {
                 value_type = soln.get("otype").toString();
             }
             mapValue.setSubject(value_uri);
             mapValue.setLabel(value_label);
             mapValue.setType(value_type);
-
+            
             if (outgoingLinks.containsKey(mapKey)) {
-
                 List<Triple> objects = outgoingLinks.get(mapKey);
 
                 objects.add(mapValue);
@@ -441,27 +519,40 @@ public class RDFfileManager {
                 outgoingLinks.put(mapKey, objects);
             }
         }
+        for(List<Triple>  triples: outgoingLinks.values()){
+            for(Triple triple : triples){
+                if(!triple.getType().equals("NOTYPE")){
+                    String mergedLabels=this.returnLabel(triple.getSubject(), labelProperty);
+                    if(!mergedLabels.isEmpty()){
+                        triple.setLabel(mergedLabels);
+                    }
+                }
+            }
+        }
         return outgoingLinks;
     }
-
-    public Map<Triple, List<Triple>> returnIncomingLinksWithTypes(String resource, Set<String> labelProperty, String graph) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+        
+    public Map<Triple, List<Triple>> returnIncomingLinksWithTypes(String resource, Set<String> labelProperty, String graph, List<String> urisToExclude) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
 
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
-        String query = selectAllIncomingWithLabelsAndTypes(resource, labelProperty, graph);
+        String query = selectAllIncomingWithLabelsAndTypes(resource, labelProperty, graph, urisToExclude);
         ResultSet sparqlResults = query(query);
-
+       
         for (; sparqlResults.hasNext();) {
 
             QuerySolution soln = sparqlResults.nextSolution();
+           
             Triple mapKey = new Triple();
             Triple mapValue = new Triple();
 
             String key_uri = soln.get("p").toString();
             String key_label = "NOLABEL";
+            
             if (soln.get("plabel") != null) {
                 key_label = soln.get("plabel").toString();
             }
-
+            
+            //String key_type = result.getBinding("ptype").getValue().stringValue();
             String key_type = "NOTYPE";
             mapKey.setSubject(key_uri);
             mapKey.setLabel(key_label);
@@ -493,6 +584,7 @@ public class RDFfileManager {
                 outgoingLinks.put(mapKey, objects);
             }
         }
+        
         return outgoingLinks;
     }
 
