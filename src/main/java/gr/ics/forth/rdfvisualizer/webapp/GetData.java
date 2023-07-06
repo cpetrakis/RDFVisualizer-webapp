@@ -451,7 +451,7 @@ public class GetData extends HttpServlet {
             //merge json shows inverse labels otherwise only outgoing links 
             Map<Triple, List<Triple>> incomingLinks = new HashMap<Triple, List<Triple>>();
            // System.out.println(exclusions);
-            incomingLinks = manager.returnIncomingLinksWithTypes(subject, labels, "", exclusions);
+            incomingLinks = manager.returnIncomingLinksWithTypes(subject, labels, "", exclusions, new HashSet<Triple>());
             JSONObject result0 = createInvertJsonFile(incomingLinks, subjectLabel, subjectType, subject);
             return mergeJson(result, result0, subjectLabel, subjectType, subject);//result;
         }
