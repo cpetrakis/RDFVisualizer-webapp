@@ -1,21 +1,819 @@
+
 <xproperties>
     <virtuoso_host>vhost</virtuoso_host>
     
    <!-- ********Start: General Descriptors for ALL****************** -->
     <preference>
-        <type_uri>http://erlangen-crm.org/current/E1_CRM_Entity</type_uri>
+        <type_uri>http://www.cidoc-crm.org/cidoc-crm/E21_Person</type_uri>
     <weighted_property>
-            <property_uri>http://erlangen-crm.org/current/P1_is_identified_by</property_uri>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by</property_uri>
             <property_weight>110</property_weight>
     </weighted_property>
     <weighted_property>
-            <property_uri>http://erlangen-crm.org/current/P2_has_type</property_uri>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P2_has_type</property_uri>
             <property_weight>120</property_weight>
     </weighted_property>
     <weighted_property>
-            <property_uri>http://erlangen-crm.org/current/P3_has_note</property_uri>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P3_has_note</property_uri>
             <property_weight>130</property_weight>
     </weighted_property>
-    </preference>
+     <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P98i_was_born</property_uri>
+            <property_weight>130</property_weight>
+    </weighted_property>             
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P97i_was_father_for</property_uri>
+            <property_weight>140</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P100i_died_in</property_uri>
+            <property_weight>145</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P_12_was_present_at</property_uri>
+            <property_weight>150</property_weight>
+    </weighted_property>
+   
+   
+   
+   
+    
+   
+   
+    
+    
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP4i_is_object_hosted_by</property_uri>
+            <property_weight>195</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP32_curates</property_uri>
+            <property_weight>200</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP32i_is_curated_by</property_uri>
+            <property_weight>205</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P147_curated</property_uri>
+            <property_weight>210</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P147i_was_curated_by</property_uri>
+            <property_weight>215</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP6_hosts_digital_object</property_uri>
+            <property_weight>220</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP6i_is_digital_object_hosted_by</property_uri>
+            <property_weight>225</property_weight>
+    </weighted_property>
+    
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP11_curates_volatile_digital_object</property_uri>
+            <property_weight>230</property_weight>
+    </weighted_property>
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP1i_is_currently_offered_by</property_uri>
+            <property_weight>235</property_weight>
+    </weighted_property>
+ 
+    <weighted_property>        
+        <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP4_hosts_object</property_uri>
+            <property_weight>240</property_weight>
+    </weighted_property>
+    <weighted_property>        
+        <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP4i_is_object_hosted_by</property_uri>
+            <property_weight>245</property_weight>
+    </weighted_property>
+     
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP8_hosts_dataset</property_uri>
+            <property_weight>250</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP8i_is_dataset_hosted_by</property_uri>
+            <property_weight>255</property_weight>
+    </weighted_property>
+     
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP13_curates_volatile_dataset</property_uri>
+            <property_weight>260</property_weight>
+    </weighted_property>
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP13i_is_volatile_dataset_curated_by</property_uri>
+            <property_weight>265</property_weight>
+    </weighted_property>
+     
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP7_hosts_software_object</property_uri>
+            <property_weight>270</property_weight>
+    </weighted_property>
+            <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP7i_is_software_object_hosted_by</property_uri>
+            <property_weight>275</property_weight>
+    </weighted_property>
+
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP12_curates_volatile_software</property_uri>
+            <property_weight>280</property_weight>
+    </weighted_property>
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP12i_is_volatile_software_curated_by</property_uri>
+            <property_weight>285</property_weight>
+    </weighted_property>
+
+        <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP14_runs_on_request</property_uri>
+            <property_weight>290</property_weight>
+    </weighted_property>
+        <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP14i_is_run_by</property_uri>
+            <property_weight>295</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP15_delivers_on_request</property_uri>
+            <property_weight>300</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP15i_is_delivered_by</property_uri>
+            <property_weight>305</property_weight>
+    </weighted_property>
+
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P32_used_general_technique</property_uri>
+            <property_weight>310</property_weight>
+    </weighted_property>
+
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P32i_was_technique_of</property_uri>
+            <property_weight>315</property_weight>
+    </weighted_property>
+
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP28_has_designated_access_point</property_uri>
+            <property_weight>320</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP28i_is_designated_access_point_of</property_uri>
+            <property_weight>325</property_weight>
+    </weighted_property>
+
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP29_uses_access_protocol</property_uri>
+            <property_weight>330</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP29i_is_access_protocol_used_by</property_uri>
+            <property_weight>335</property_weight>
+    </weighted_property>
+    
+  <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP47_has_protocol_type</property_uri>
+            <property_weight>340</property_weight>
+    </weighted_property>
+  <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP47i_is_protocol_type_of</property_uri>
+            <property_weight>345</property_weight>
+    </weighted_property>
+ 
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP48_uses_protocol_parameter</property_uri>
+            <property_weight>350</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP48i_is_protocol_parameter_of</property_uri>
+            <property_weight>355</property_weight>
+    </weighted_property>
+    
+  
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP49_provides_access_point</property_uri>
+            <property_weight>360</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP49i_is_access_point_provided_by</property_uri>
+            <property_weight>365</property_weight>
+    </weighted_property>    
+  	</preference>
+    
     <!-- ********End: General Descriptors for ALL****************** --> 
+	
+	   <!-- ********Start: General Descriptors for ALL****************** -->
+    <preference>
+        <type_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PE17_Curated_Data_E-Service</type_uri>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by</property_uri>
+            <property_weight>110</property_weight>
+    </weighted_property>
+        <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P1i_identifies</property_uri>
+            <property_weight>115</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P2_has_type</property_uri>
+            <property_weight>120</property_weight>
+    </weighted_property>
+            <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P2i_is_type_of</property_uri>
+            <property_weight>125</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P3_has_note</property_uri>
+            <property_weight>130</property_weight>
+    </weighted_property>
+          
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP45_has_competency</property_uri>
+            <property_weight>140</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP45i_is_competency_of</property_uri>
+            <property_weight>145</property_weight>
+    </weighted_property>
+
+        
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP2_provided_by</property_uri>
+            <property_weight>150</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP2i_provides</property_uri>
+            <property_weight>155</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP42_has_declarative_time</property_uri>
+            <property_weight>160</property_weight>
+    </weighted_property>
+     
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span</property_uri>
+            <property_weight>170</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P4i_is_time-span_of</property_uri>
+            <property_weight>175</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object</property_uri>
+            <property_weight>180</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P16i_was_used_for</property_uri>
+            <property_weight>185</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP4_hosts_object</property_uri>
+            <property_weight>190</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP4i_is_object_hosted_by</property_uri>
+            <property_weight>195</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP32_curates</property_uri>
+            <property_weight>200</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP32i_is_curated_by</property_uri>
+            <property_weight>205</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P147_curated</property_uri>
+            <property_weight>210</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P147i_was_curated_by</property_uri>
+            <property_weight>215</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP6_hosts_digital_object</property_uri>
+            <property_weight>220</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP6i_is_digital_object_hosted_by</property_uri>
+            <property_weight>225</property_weight>
+    </weighted_property>
+    
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP11_curates_volatile_digital_object</property_uri>
+            <property_weight>230</property_weight>
+    </weighted_property>
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP1i_is_currently_offered_by</property_uri>
+            <property_weight>235</property_weight>
+    </weighted_property>
+ 
+    <weighted_property>        
+        <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP4_hosts_object</property_uri>
+            <property_weight>240</property_weight>
+    </weighted_property>
+    <weighted_property>        
+        <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP4i_is_object_hosted_by</property_uri>
+            <property_weight>245</property_weight>
+    </weighted_property>
+     
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP8_hosts_dataset</property_uri>
+            <property_weight>250</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP8i_is_dataset_hosted_by</property_uri>
+            <property_weight>255</property_weight>
+    </weighted_property>
+     
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP13_curates_volatile_dataset</property_uri>
+            <property_weight>260</property_weight>
+    </weighted_property>
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP13i_is_volatile_dataset_curated_by</property_uri>
+            <property_weight>265</property_weight>
+    </weighted_property>
+     
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP7_hosts_software_object</property_uri>
+            <property_weight>270</property_weight>
+    </weighted_property>
+            <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP7i_is_software_object_hosted_by</property_uri>
+            <property_weight>275</property_weight>
+    </weighted_property>
+
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP12_curates_volatile_software</property_uri>
+            <property_weight>280</property_weight>
+    </weighted_property>
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP12i_is_volatile_software_curated_by</property_uri>
+            <property_weight>285</property_weight>
+    </weighted_property>
+
+        <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP14_runs_on_request</property_uri>
+            <property_weight>290</property_weight>
+    </weighted_property>
+        <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP14i_is_run_by</property_uri>
+            <property_weight>295</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP15_delivers_on_request</property_uri>
+            <property_weight>300</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP15i_is_delivered_by</property_uri>
+            <property_weight>305</property_weight>
+    </weighted_property>
+
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P32_used_general_technique</property_uri>
+            <property_weight>310</property_weight>
+    </weighted_property>
+
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P32i_was_technique_of</property_uri>
+            <property_weight>315</property_weight>
+    </weighted_property>
+
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP28_has_designated_access_point</property_uri>
+            <property_weight>320</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP28i_is_designated_access_point_of</property_uri>
+            <property_weight>325</property_weight>
+    </weighted_property>
+
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP29_uses_access_protocol</property_uri>
+            <property_weight>330</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP29i_is_access_protocol_used_by</property_uri>
+            <property_weight>335</property_weight>
+    </weighted_property>
+    
+  <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP47_has_protocol_type</property_uri>
+            <property_weight>340</property_weight>
+    </weighted_property>
+  <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP47i_is_protocol_type_of</property_uri>
+            <property_weight>345</property_weight>
+    </weighted_property>
+ 
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP48_uses_protocol_parameter</property_uri>
+            <property_weight>350</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP48i_is_protocol_parameter_of</property_uri>
+            <property_weight>355</property_weight>
+    </weighted_property>
+    
+  
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP49_provides_access_point</property_uri>
+            <property_weight>360</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP49i_is_access_point_provided_by</property_uri>
+            <property_weight>365</property_weight>
+    </weighted_property>    
+  	</preference>
+	
+    
+<!-- ********Start: General Descriptors for ALL****************** -->
+    <preference>
+        <type_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PE22_Persistent_Dataset</type_uri>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by</property_uri>
+            <property_weight>110</property_weight>
+    </weighted_property>
+        <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P1i_identifies</property_uri>
+            <property_weight>115</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P2_has_type</property_uri>
+            <property_weight>120</property_weight>
+    </weighted_property>
+            <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P2i_is_type_of</property_uri>
+            <property_weight>125</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P3_has_note</property_uri>
+            <property_weight>130</property_weight>
+    </weighted_property>
+     <weighted_property>    <property_uri>http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/L11i_was_output_of</property_uri>
+            <property_weight>140</property_weight>
+    </weighted_property>
+        
+        
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P46_is_composed_of</property_uri>
+            <property_weight>150</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of</property_uri>
+            <property_weight>155</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of</property_uri>
+            <property_weight>160</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of</property_uri>
+            <property_weight>165</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP18_has_digital_object_part</property_uri>
+            <property_weight>170</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP18i_is_digital_object_part_of</property_uri>
+            <property_weight>175</property_weight>
+    </weighted_property>     
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP16_has_persistent_digital_object_part</property_uri>
+            <property_weight>180</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP16i_is_persistent_digital_object_part_of</property_uri>
+            <property_weight>185</property_weight>
+    </weighted_property>
+       <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP23_has_dataset_part</property_uri>
+            <property_weight>190</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP23i_is_dataset_part_of</property_uri>
+            <property_weight>195</property_weight>
+    </weighted_property>
+       <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP20_has_persistent_dataset_part</property_uri>
+            <property_weight>200</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP20i_is_persistent_dataset_part_of</property_uri>
+            <property_weight>205</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP21_has_software_part</property_uri>
+            <property_weight>210</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP21i_is_software_part_of</property_uri>
+            <property_weight>215</property_weight>
+    </weighted_property>    
+        
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP19_has_persistent_software_part</property_uri>
+            <property_weight>220</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP19i_is_persistent_software_part_of</property_uri>
+            <property_weight>225</property_weight>
+    </weighted_property>    
+        
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP6i_is_digital_object_hosted_by</property_uri>
+            <property_weight>230</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP7i_is_software_object_hosted_by</property_uri>
+            <property_weight>240</property_weight>
+    </weighted_property> 
+            <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP8i_is_dataset_hosted_by</property_uri>
+            <property_weight>250</property_weight>
+    </weighted_property>   
+        <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P147i_was_curated_by</property_uri>
+            <property_weight>260</property_weight>
+    </weighted_property>
+       <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP15i_is_delivered_by</property_uri>
+            <property_weight>270</property_weight>
+    </weighted_property>    
+          <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP14i_is_run_by</property_uri>
+            <property_weight>280</property_weight>
+    </weighted_property>
+          <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP11i_is_volatile_digital_object_curated_by</property_uri>
+            <property_weight>290</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP13i_is_volatile_dataset_curated_by</property_uri>
+            <property_weight>300</property_weight>
+    </weighted_property>    
+     
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP12i_is_volatile_software_curated_by</property_uri>
+            <property_weight>310</property_weight>
+    </weighted_property>
+     
+        
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP17_has_snapshot</property_uri>
+            <property_weight>320</property_weight>
+    </weighted_property>   
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP17i_is_snapshot_of</property_uri>
+            <property_weight>325</property_weight>
+    </weighted_property> 
+<weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP24_has_dataset_snapshot</property_uri>
+            <property_weight>330</property_weight>
+    </weighted_property>   
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP24i_is_dataset_snapshot_of</property_uri>
+            <property_weight>335</property_weight>
+    </weighted_property> 
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP22_has_release</property_uri>
+            <property_weight>340</property_weight>
+    </weighted_property>   
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP22i_is_release_of</property_uri>
+            <property_weight>345</property_weight>
+    </weighted_property>    
+             <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P129_is_about</property_uri>
+            <property_weight>350</property_weight>
+    </weighted_property>  
+      <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P103_was_intended_for</property_uri>
+            <property_weight>360</property_weight>
+    </weighted_property>    
+     <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension</property_uri>
+            <property_weight>370</property_weight>
+    </weighted_property>   
+        
+    </preference>  
+
+<!-- ********Start: General Descriptors for ALL****************** -->
+    <preference>
+        <type_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PE24_Volatile_Dataset</type_uri>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by</property_uri>
+            <property_weight>110</property_weight>
+    </weighted_property>
+        <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P1i_identifies</property_uri>
+            <property_weight>115</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P2_has_type</property_uri>
+            <property_weight>120</property_weight>
+    </weighted_property>
+            <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P2i_is_type_of</property_uri>
+            <property_weight>125</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P3_has_note</property_uri>
+            <property_weight>130</property_weight>
+    </weighted_property>
+     <weighted_property>    <property_uri>http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/L11i_was_output_of</property_uri>
+            <property_weight>140</property_weight>
+    </weighted_property>
+        
+        
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P46_is_composed_of</property_uri>
+            <property_weight>150</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of</property_uri>
+            <property_weight>155</property_weight>
+    </weighted_property>
+    
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of</property_uri>
+            <property_weight>160</property_weight>
+    </weighted_property>
+    <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of</property_uri>
+            <property_weight>165</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP18_has_digital_object_part</property_uri>
+            <property_weight>170</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP18i_is_digital_object_part_of</property_uri>
+            <property_weight>175</property_weight>
+    </weighted_property>     
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP16_has_persistent_digital_object_part</property_uri>
+            <property_weight>180</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP16i_is_persistent_digital_object_part_of</property_uri>
+            <property_weight>185</property_weight>
+    </weighted_property>
+       <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP23_has_dataset_part</property_uri>
+            <property_weight>190</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP23i_is_dataset_part_of</property_uri>
+            <property_weight>195</property_weight>
+    </weighted_property>
+       <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP20_has_persistent_dataset_part</property_uri>
+            <property_weight>200</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP20i_is_persistent_dataset_part_of</property_uri>
+            <property_weight>205</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP21_has_software_part</property_uri>
+            <property_weight>210</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP21i_is_software_part_of</property_uri>
+            <property_weight>215</property_weight>
+    </weighted_property>    
+        
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP19_has_persistent_software_part</property_uri>
+            <property_weight>220</property_weight>
+    </weighted_property> 
+        
+         <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP19i_is_persistent_software_part_of</property_uri>
+            <property_weight>225</property_weight>
+    </weighted_property>    
+        
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP6i_is_digital_object_hosted_by</property_uri>
+            <property_weight>230</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP7i_is_software_object_hosted_by</property_uri>
+            <property_weight>240</property_weight>
+    </weighted_property> 
+            <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP8i_is_dataset_hosted_by</property_uri>
+            <property_weight>250</property_weight>
+    </weighted_property>   
+        <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P147i_was_curated_by</property_uri>
+            <property_weight>260</property_weight>
+    </weighted_property>
+       <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP15i_is_delivered_by</property_uri>
+            <property_weight>270</property_weight>
+    </weighted_property>    
+          <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP14i_is_run_by</property_uri>
+            <property_weight>280</property_weight>
+    </weighted_property>
+          <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP11i_is_volatile_digital_object_curated_by</property_uri>
+            <property_weight>290</property_weight>
+    </weighted_property>
+      <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP13i_is_volatile_dataset_curated_by</property_uri>
+            <property_weight>300</property_weight>
+    </weighted_property>    
+     
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP12i_is_volatile_software_curated_by</property_uri>
+            <property_weight>310</property_weight>
+    </weighted_property>
+     
+        
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP17_has_snapshot</property_uri>
+            <property_weight>320</property_weight>
+    </weighted_property>   
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP17i_is_snapshot_of</property_uri>
+            <property_weight>325</property_weight>
+    </weighted_property> 
+<weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP24_has_dataset_snapshot</property_uri>
+            <property_weight>330</property_weight>
+    </weighted_property>   
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP24i_is_dataset_snapshot_of</property_uri>
+            <property_weight>335</property_weight>
+    </weighted_property> 
+     <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP22_has_release</property_uri>
+            <property_weight>340</property_weight>
+    </weighted_property>   
+    <weighted_property>
+            <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP22i_is_release_of</property_uri>
+            <property_weight>345</property_weight>
+    </weighted_property>    
+             <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P129_is_about</property_uri>
+            <property_weight>350</property_weight>
+    </weighted_property>  
+      <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P103_was_intended_for</property_uri>
+            <property_weight>360</property_weight>
+    </weighted_property>    
+     <weighted_property>
+            <property_uri>http://www.cidoc-crm.org/cidoc-crm/P43_has_dimension</property_uri>
+            <property_weight>370</property_weight>
+    </weighted_property>   
+        
+    </preference> 
+    
 </xproperties>
+
+<!--<xproperties>
+    <virtuoso_host>vhost</virtuoso_host>
+    
+   
+    <preference>
+        <type_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PE17_Curated_Data_E-Service</type_uri>
+            <weighted_property>
+                    <property_uri>http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by</property_uri>
+                    <property_weight>110</property_weight>
+            </weighted_property>
+            <weighted_property>
+                    <property_uri>http://parthenos.d4science.org/CRMext/CRMpe.rdfs/PP2_provided_by</property_uri>
+                    <property_weight>120</property_weight>
+            </weighted_property>
+            <weighted_property>
+                    <property_uri>http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object</property_uri>
+                    <property_weight>130</property_weight>
+            </weighted_property>
+            
+    </preference>
+   
+</xproperties> -->
