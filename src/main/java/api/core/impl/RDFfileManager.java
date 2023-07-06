@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.json.JSONObject;
 import org.openrdf.query.MalformedQueryException;
@@ -38,6 +40,7 @@ import org.openrdf.repository.RepositoryException;
 public class RDFfileManager {
 
     private Model model;
+    private Model schemaModel ;
 
     public void readFile(File rdfFile, String rdfFormat) throws FileNotFoundException {
 
@@ -45,6 +48,8 @@ public class RDFfileManager {
         InputStream targetStream = new FileInputStream(rdfFile);
         model.read(targetStream, null, rdfFormat);
         this.model = model;
+        this.schemaModel = ModelFactory.createDefaultModel();
+        this.schemaModel.read("http://www.cidoc-crm.org/cidoc-crm/");
     }
     
 
@@ -529,11 +534,36 @@ public class RDFfileManager {
                 }
             }
         }
+        Map<Triple,List<Triple>> inResults=this.returnIncomingLinksWithTypes(resource,labelProperty, "", new ArrayList<String>(),new HashSet<Triple>());
+        for(Triple inTriple : inResults.keySet()){
+            String inverseTriple=this.getInverseProperty(inTriple.getSubject());
+            if(inverseTriple!=null){
+                Triple mapKey = new Triple();
+                mapKey.setSubject(inverseTriple);
+                mapKey.setType(inTriple.getType());
+                mapKey.setLabel(inTriple.getLabel());
+                if(outgoingLinks.containsKey(mapKey)){
+                    List<Triple> objects = outgoingLinks.get(mapKey);
+                    objects.addAll(inResults.get(inTriple));
+                    outgoingLinks.put(mapKey, objects);
+                }else{
+                    outgoingLinks.put(mapKey, inResults.get(inTriple));
+                }
+            }
+        }
         return outgoingLinks;
     }
         
-    public Map<Triple, List<Triple>> returnIncomingLinksWithTypes(String resource, Set<String> labelProperty, String graph, List<String> urisToExclude) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    public Map<Triple, List<Triple>> returnIncomingLinksWithTypes(String resource, Set<String> labelProperty, String graph, List<String> urisToExclude, Set<Triple> outProperties) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
 
+        Set<String> incomingPropertiesToOmit=new HashSet<>();
+        for(Triple outProperty : outProperties){
+            String inverseProperty=this.getInverseProperty(outProperty.getSubject());
+            if(inverseProperty!=null){
+                incomingPropertiesToOmit.add(inverseProperty);
+            }
+        }
+        
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
         String query = selectAllIncomingWithLabelsAndTypes(resource, labelProperty, graph, urisToExclude);
         ResultSet sparqlResults = query(query);
@@ -573,6 +603,10 @@ public class RDFfileManager {
             mapValue.setLabel(value_label);
             mapValue.setType(value_type);
 
+            if(incomingPropertiesToOmit.contains(mapKey.getSubject())){
+                continue;
+            }
+            
             if (outgoingLinks.containsKey(mapKey)) {
                 List<Triple> objects = outgoingLinks.get(mapKey);
                 objects.add(mapValue);
@@ -602,5 +636,27 @@ public class RDFfileManager {
             subjects.add(value);
         }
         return subjects;
+    }
+    
+    /* Retrieves the inverse property (if it exists). If it cannot find it, or it does not exist, it returns a null value */ 
+    public String getInverseProperty(String propertyUri) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+        String inverseProperty=null;
+//        if(propertyUri.startsWith("http://www.w3.org/")){
+//            return inverseProperty;
+//        }
+//        String schemaUrl=propertyUri;
+//        if(schemaUrl.contains("#")){
+//            schemaUrl=propertyUri.substring(0,propertyUri.lastIndexOf("#"));
+//        }else{
+//            schemaUrl=propertyUri.substring(0,propertyUri.lastIndexOf("/"));
+//        }
+//        Model schemaModel = ModelFactory.createDefaultModel();
+//        schemaModel.read(schemaUrl);
+
+        NodeIterator propsIter=this.schemaModel.listObjectsOfProperty(schemaModel.getResource(propertyUri),schemaModel.getProperty("http://www.w3.org/2002/07/owl#inverseOf"));
+        if(propsIter.hasNext()){
+           inverseProperty=propsIter.next().asResource().getURI();
+        }
+        return inverseProperty;
     }
 }
