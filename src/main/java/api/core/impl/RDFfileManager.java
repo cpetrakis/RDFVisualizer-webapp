@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -537,36 +538,17 @@ public class RDFfileManager {
                 }
             }
         }
-        Map<Triple,List<Triple>> inResults=this.returnIncomingLinksWithTypes(resource,labelProperty, "", new ArrayList<String>(),new HashSet<Triple>());
-        for(Triple inTriple : inResults.keySet()){
-            String inverseTriple=this.getInverseProperty(inTriple.getSubject());
-            if(inverseTriple!=null){
-                Triple mapKey = new Triple();
-                mapKey.setSubject(inverseTriple);
-                mapKey.setType(inTriple.getType());
-                mapKey.setLabel(inTriple.getLabel());
-                if(outgoingLinks.containsKey(mapKey)){
-                    List<Triple> objects = outgoingLinks.get(mapKey);
-                    objects.addAll(inResults.get(inTriple));
-                    outgoingLinks.put(mapKey, objects);
-                }else{
-                    outgoingLinks.put(mapKey, inResults.get(inTriple));
-                }
-            }
-        }
         return outgoingLinks;
     }
         
-    public Map<Triple, List<Triple>> returnIncomingLinksWithTypes(String resource, Set<String> labelProperty, String graph, List<String> urisToExclude, Set<Triple> outProperties) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    public List<Map<Triple, List<Triple>>> returnIncomingLinksWithTypes(String resource, Set<String> labelProperty, String graph, List<String> urisToExclude) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
 
-        Set<String> incomingPropertiesToOmit=new HashSet<>();
-        for(Triple outProperty : outProperties){
-            String inverseProperty=this.getInverseProperty(outProperty.getSubject());
-            if(inverseProperty!=null){
-                incomingPropertiesToOmit.add(inverseProperty);
-            }
-        }
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
+        Map<Triple, List<Triple>> inversed = new HashMap<Triple, List<Triple>>();
+        if(!resource.startsWith("http://") && !resource.startsWith("https://") && !resource.startsWith("urn:uuid:")){
+            return Arrays.asList(inversed,outgoingLinks);
+        }
+        
         String query = selectAllIncomingWithLabelsAndTypes(resource, labelProperty, graph, urisToExclude);
         ResultSet sparqlResults = query(query);
        
@@ -605,23 +587,34 @@ public class RDFfileManager {
             mapValue.setLabel(value_label);
             mapValue.setType(value_type);
 
-            if(incomingPropertiesToOmit.contains(mapKey.getSubject())){
-                continue;
-            }
-            
-            if (outgoingLinks.containsKey(mapKey)) {
-                List<Triple> objects = outgoingLinks.get(mapKey);
-                objects.add(mapValue);
-                outgoingLinks.put(mapKey, objects);
+            String inverseProperty=this.getInverseProperty(mapKey.getSubject());
+            if(inverseProperty!=null){
+                mapKey.setSubject(inverseProperty);
+                if(outgoingLinks.containsKey(mapKey)){                    
+                    List<Triple> objects = inversed.get(mapKey);
+                    objects.add(mapValue);
+                    inversed.put(mapKey, objects);
+                    
+                }else{
+                    List<Triple> objects = new ArrayList();
+                    objects.add(mapValue);
+                    inversed.put(mapKey, objects);
+                }
+            }else{
+                if (outgoingLinks.containsKey(mapKey)) {
+                    List<Triple> objects = outgoingLinks.get(mapKey);
+                    objects.add(mapValue);
+                    outgoingLinks.put(mapKey, objects);
 
-            } else {
-                List<Triple> objects = new ArrayList();
-                objects.add(mapValue);
-                outgoingLinks.put(mapKey, objects);
+                } else {
+                    List<Triple> objects = new ArrayList();
+                    objects.add(mapValue);
+                    outgoingLinks.put(mapKey, objects);
+                }
             }
         }
         
-        return outgoingLinks;
+        return Arrays.asList(inversed,outgoingLinks);
     }
 
     public List<String> returnSubjects(String namedGraph) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
@@ -642,6 +635,7 @@ public class RDFfileManager {
     
     /* Retrieves the inverse property (if it exists). If it cannot find it, or it does not exist, it returns a null value */ 
     public String getInverseProperty(String propertyUri) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+//        System.out.println("check "+propertyUri);
         String inverseProperty=null;
 //        if(propertyUri.startsWith("http://www.w3.org/")){
 //            return inverseProperty;

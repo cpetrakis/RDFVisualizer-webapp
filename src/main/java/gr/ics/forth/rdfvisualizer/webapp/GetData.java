@@ -373,7 +373,7 @@ public class GetData extends HttpServlet {
      */
     
     public static JSONObject filecase(String resource, String filename,String label,String pref_labels,String show_incomingLinks, String parentProperty) throws RepositoryException, MalformedQueryException, QueryEvaluationException, Exception {
-
+        
         GetConfigProperties app = new GetConfigProperties();
         Properties props = app.getConfig("config.properties");
 
@@ -406,19 +406,22 @@ public class GetData extends HttpServlet {
             subject = subject.substring(0, 500);
         }
 
-        //String subjectLabel = manager.returnLabel(subject, label);
-        String subjectLabel = manager.returnLabel(subject, new HashSet<String>(Arrays.asList(label)));
-        String subjectType = manager.returnType(subject);
-
         String[] pref_lbls = pref_labels.split(",");
+        //String subjectLabel = manager.returnLabel(subject, label);
+        String subjectLabel = "";
+        String subjectType = "";
+        if(resource.startsWith("http://") || resource.startsWith("https://") || resource.startsWith("urn:uuid:")){
+            
+            subjectLabel = manager.returnLabel(subject, new HashSet<String>(Arrays.asList(label)));
+            subjectType = manager.returnType(subject);
+        
 
-        if ((subjectLabel.isEmpty()) && (pref_lbls.length > 0)) {
-           // subjectLabel = manager.returnLabel(subject, pref_lbls[0]);
-            subjectLabel = manager.returnLabel(subject, new HashSet<String>(Arrays.asList(pref_lbls)));
+            if ((subjectLabel.isEmpty()) && (pref_lbls.length > 0)) {
+               // subjectLabel = manager.returnLabel(subject, pref_lbls[0]);
+                subjectLabel = manager.returnLabel(subject, new HashSet<String>(Arrays.asList(pref_lbls)));
+            }
         }
-
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
-        // Map<Triple, List<Triple>> incomingLinks = new HashMap<Triple, List<Triple>>();
 
         Set<String> labels = new TreeSet();
 
@@ -433,14 +436,11 @@ public class GetData extends HttpServlet {
        // System.out.println("labels"+labels);
         outgoingLinks = manager.returnOutgoingLinksWithTypes(subject, labels);
         
-      
-        JSONObject result = createJsonFile(outgoingLinks, subjectLabel, subjectType, subject);
-        
-                
         if (show_incomingLinks.equals("false")) {
+            JSONObject result = createJsonFile(outgoingLinks, subjectLabel, subjectType, subject);
             return result;
         } else {
-            
+                      
             String exclude_inverse = props.getProperty("exclude_inverse").trim();
             exclude_inverse = exclude_inverse +","+prefix+parentProperty;
             List<String> exclusions = Arrays.asList(exclude_inverse.split(","));
@@ -450,8 +450,14 @@ public class GetData extends HttpServlet {
             
             //merge json shows inverse labels otherwise only outgoing links 
             Map<Triple, List<Triple>> incomingLinks = new HashMap<Triple, List<Triple>>();
-           // System.out.println(exclusions);
-            incomingLinks = manager.returnIncomingLinksWithTypes(subject, labels, "", exclusions, outgoingLinks.keySet());
+            Map<Triple, List<Triple>> inverseLinks = new HashMap<Triple, List<Triple>>();
+            List<Map<Triple,List<Triple>>> incomingResults=manager.returnIncomingLinksWithTypes(subject, labels, "", exclusions);
+            
+            inverseLinks = incomingResults.get(0);
+            incomingLinks = incomingResults.get(1);
+            outgoingLinks.putAll(inverseLinks);
+            JSONObject result = createJsonFile(outgoingLinks, subjectLabel, subjectType, subject);
+            
             JSONObject result0 = createInvertJsonFile(incomingLinks, subjectLabel, subjectType, subject);
             return mergeJson(result, result0, subjectLabel, subjectType, subject);//result;
         }
