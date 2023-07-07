@@ -474,6 +474,9 @@ public class RDFfileManager {
     public Map<Triple, List<Triple>> returnOutgoingLinksWithTypes(String resource, Set<String> labelProperty) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
 
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
+        if(!resource.startsWith("http://") && !resource.startsWith("https://") && !resource.startsWith("urn:uuid:")){
+            return outgoingLinks;
+        }
         String query = selectAllOutgoingWithLabelsAndTypes(resource, labelProperty);
         ResultSet sparqlResults = query(query);
 
@@ -563,7 +566,6 @@ public class RDFfileManager {
                 incomingPropertiesToOmit.add(inverseProperty);
             }
         }
-        
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
         String query = selectAllIncomingWithLabelsAndTypes(resource, labelProperty, graph, urisToExclude);
         ResultSet sparqlResults = query(query);
