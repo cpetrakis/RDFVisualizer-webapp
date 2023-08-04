@@ -434,7 +434,7 @@ public class GetData extends HttpServlet {
                 
        // System.out.println("subject--->"+subject);
        // System.out.println("labels"+labels);
-        outgoingLinks = manager.returnOutgoingLinksWithTypes(subject, labels, prefix+parentProperty);
+        outgoingLinks = manager.returnOutgoingLinksWithTypes(subject, labels);
         
         if (show_incomingLinks.equals("false")) {
             JSONObject result = createJsonFile(outgoingLinks, subjectLabel, subjectType, subject);

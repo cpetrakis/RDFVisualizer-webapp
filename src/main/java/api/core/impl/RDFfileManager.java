@@ -472,7 +472,7 @@ public class RDFfileManager {
         return outgoingLinks;
     }
 
-    public Map<Triple, List<Triple>> returnOutgoingLinksWithTypes(String resource, Set<String> labelProperty, String parentProperty) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    public Map<Triple, List<Triple>> returnOutgoingLinksWithTypes(String resource, Set<String> labelProperty) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
         
         Map<Triple, List<Triple>> outgoingLinks = new HashMap<Triple, List<Triple>>();
         if(!resource.startsWith("http://") && !resource.startsWith("https://") && !resource.startsWith("urn:uuid:")){
@@ -480,11 +480,7 @@ public class RDFfileManager {
         }
         String query = selectAllOutgoingWithLabelsAndTypes(resource, labelProperty);
         ResultSet sparqlResults = query(query);
-        String inverseParentProperty=null;
-        if(parentProperty!=null){
-            inverseParentProperty=this.getInverseProperty(parentProperty);
-        }
-        
+
         for (; sparqlResults.hasNext();) {
             QuerySolution soln = sparqlResults.nextSolution();
        
@@ -518,10 +514,6 @@ public class RDFfileManager {
             mapValue.setSubject(value_uri);
             mapValue.setLabel(value_label);
             mapValue.setType(value_type);
-            
-            if(inverseParentProperty!=null && mapKey.getSubject().equals(inverseParentProperty)){
-                continue;
-            }
             
             if (outgoingLinks.containsKey(mapKey)) {
                 List<Triple> objects = outgoingLinks.get(mapKey);
