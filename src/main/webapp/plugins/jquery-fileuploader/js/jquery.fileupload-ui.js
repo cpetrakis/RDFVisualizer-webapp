@@ -662,6 +662,8 @@
          console.log('files deleted..')
           $('#dataTable').hide();
           localStorage.removeItem('selected_subjectsToshow');
+          localStorage.removeItem('selected_filename');
+          localStorage.removeItem('filename');
           e.preventDefault();
           filesList.find('.cancel').trigger('click');
         }
