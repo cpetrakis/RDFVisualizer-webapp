@@ -48,97 +48,92 @@ public class FileUploadServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        System.out.println(request.getHeader("Content-Type"));
-        String range = request.getHeader("Content-Range");
-        System.out.println("RANGE is:" + range);
-        long fileFullLength = -1;
-        long chunkFrom = -1;
-        long chunkTo = -1;
-        if (range != null) {
-            if (!range.startsWith("bytes ")) {
-                throw new ServletException("Unexpected range format: " + range);
-            }
-            String[] fromToAndLength = range.substring(6).split(Pattern.quote("/"));
-            fileFullLength = Long.parseLong(fromToAndLength[1]);
-            String[] fromAndTo = fromToAndLength[0].split(Pattern.quote("-"));
-            chunkFrom = Long.parseLong(fromAndTo[0]);
-            chunkTo = Long.parseLong(fromAndTo[1]);
-        }
-        //File tempDir = new File(System.getProperty("java.io.tmpdir"));  // Configure according
-        //File tempDir = new File(System.getProperty("java.io.tmpdir"));  // Configure according
-       
-        GetConfigProperties app = new GetConfigProperties();
-        Properties props = app.getConfig("config.properties");
 
-        String defaultfolder = props.getProperty("default_folder").trim();
-        File tempDir = new File(defaultfolder);  
-        // System.out.println(tempDir);
-        
-        File storageDir = tempDir;                                      // project server environment.
-        String uploadId = null;
-        FileItemFactory factory = new DiskFileItemFactory(10000000, tempDir);
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        try {
-            List<?> items = upload.parseRequest(request);
-            Iterator<?> it = items.iterator();
-            List<Map<String, Object>> ret = new ArrayList<Map<String, Object>>();
-            while (it.hasNext()) {
-                FileItem item = (FileItem) it.next();
-                if (item.isFormField()) {
-                    if (item.getFieldName().equals("uploadId")) {
-//                        uploadId = item.getString();
-                        uploadId = "";
-                    }
-                } else {
-                    Map<String, Object> fileInfo = new LinkedHashMap<String, Object>();
-                    File assembledFile = null;
-                    fileInfo.put("name", item.getName());
-                    fileInfo.put("type", item.getContentType());
-                    File dir = new File(storageDir, uploadId);
-                    if (!dir.exists()) {
-                        dir.mkdir();
-                    }
-                    if (fileFullLength < 0) {  // File is not chunked
-                        fileInfo.put("size", item.getSize());
-                        assembledFile = new File(dir, item.getName());
-                        item.write(assembledFile);
-                    } else {  // File is chunked
-                        byte[] bytes = item.get();
-                        if (chunkFrom + bytes.length != chunkTo + 1) {
-                            throw new ServletException("Unexpected length of chunk: " + bytes.length
-                                    + " != " + (chunkTo + 1) + " - " + chunkFrom);
-                        }
-                        saveChunk(dir, item.getName(), chunkFrom, bytes, fileFullLength);
-                        TreeMap<Long, Long> chunkStartsToLengths = getChunkStartsToLengths(dir, item.getName());
-                        long lengthSoFar = getCommonLength(chunkStartsToLengths);
-                        fileInfo.put("size", lengthSoFar);
-                        if (lengthSoFar == fileFullLength) {
-                            assembledFile = assembleAndDeleteChunks(dir, item.getName(),
-                                    new ArrayList<Long>(chunkStartsToLengths.keySet()));
-                        }
-                    }
-                    if (assembledFile != null) {
-                        fileInfo.put("complete", true);
-                        fileInfo.put("serverPath", assembledFile.getAbsolutePath());
-                        // Here you can do something with fully assembled file.
-                    }
-                    ret.add(fileInfo);
-                }
-            }
-            Map<String, Object> filesInfo = new LinkedHashMap<String, Object>();
-            filesInfo.put("files", ret);
-            response.setContentType("application/json");
-            response.getWriter().write(new ObjectMapper().writeValueAsString(filesInfo));
-            response.getWriter().close();
-        } catch (ServletException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new ServletException(ex);
+        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    String range = request.getHeader("Content-Range");
+    long fileFullLength = -1;
+    long chunkFrom = -1;
+    long chunkTo = -1;
+    if (range != null) {
+        if (!range.startsWith("bytes ")) {
+            throw new ServletException("Unexpected range format: " + range);
         }
+        String[] fromToAndLength = range.substring(6).split(Pattern.quote("/"));
+        fileFullLength = Long.parseLong(fromToAndLength[1]);
+        String[] fromAndTo = fromToAndLength[0].split(Pattern.quote("-"));
+        chunkFrom = Long.parseLong(fromAndTo[0]);
+        chunkTo = Long.parseLong(fromAndTo[1]);
     }
+
+    GetConfigProperties app = new GetConfigProperties();
+    Properties props = app.getConfig("config.properties");
+    String defaultfolder = props.getProperty("default_folder").trim();
+    File tempDir = new File(defaultfolder);
+    File storageDir = tempDir;
+    String uploadId = null;
+    FileItemFactory factory = new DiskFileItemFactory(10000000, tempDir);
+    ServletFileUpload upload = new ServletFileUpload(factory);
+
+
+    try {
+        List<?> items = upload.parseRequest(request);
+        Iterator<?> it = items.iterator();
+        List<Map<String, Object>> ret = new ArrayList<Map<String, Object>>();
+        while (it.hasNext()) {
+            FileItem item = (FileItem) it.next();
+            if (item.isFormField()) {
+                if (item.getFieldName().equals("uploadId")) {
+                    uploadId = "";
+                }
+            } else {
+                Map<String, Object> fileInfo = new LinkedHashMap<String, Object>();
+                fileInfo.put("name", item.getName());
+                fileInfo.put("type", item.getContentType());
+                File dir = new File(storageDir, uploadId);
+                if (!dir.exists()) {
+                    dir.mkdir();
+                }
+
+                File existingFile = new File(dir, item.getName());
+                if (existingFile.exists()) {
+                    // Delete the existing file before saving the new one
+                    existingFile.delete();
+                }
+
+                if (fileFullLength < 0) {
+                    fileInfo.put("size", item.getSize());
+                    File assembledFile = new File(dir, item.getName());
+                    item.write(assembledFile);
+                } else {
+                    byte[] bytes = item.get();
+                    if (chunkFrom + bytes.length != chunkTo + 1) {
+                        throw new ServletException("Unexpected length of chunk: " + bytes.length
+                                + " != " + (chunkTo + 1) + " - " + chunkFrom);
+                    }
+                    saveChunk(dir, item.getName(), chunkFrom, bytes, fileFullLength);
+                    TreeMap<Long, Long> chunkStartsToLengths = getChunkStartsToLengths(dir, item.getName());
+                    long lengthSoFar = getCommonLength(chunkStartsToLengths);
+                    fileInfo.put("size", lengthSoFar);
+                    if (lengthSoFar == fileFullLength) {
+                        assembleAndDeleteChunks(dir, item.getName(), new ArrayList<Long>(chunkStartsToLengths.keySet()));
+                    }
+                }
+                ret.add(fileInfo);
+            }
+        }
+        Map<String, Object> filesInfo = new LinkedHashMap<String, Object>();
+        filesInfo.put("files", ret);
+        response.setContentType("application/json");
+        response.getWriter().write(new ObjectMapper().writeValueAsString(filesInfo));
+        response.getWriter().close();
+    } catch (ServletException ex) {
+        throw ex;
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        throw new ServletException(ex);
+    }
+}
 
     private static void saveChunk(File dir, String fileName,
             long from, byte[] bytes, long fileFullLength) throws IOException {
