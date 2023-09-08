@@ -963,7 +963,8 @@ function getModel(resource) {
                         folderpath: folderpath,
                         schema_Label_uri : schema_Label_uri,
                         pref_Label_uri : pref_Label_uri, 
-                        show_incoming_links :show_incoming_links
+                        show_incoming_links :show_incoming_links,
+                        parentProperty : Id
 
                     }, function (response) {
 
