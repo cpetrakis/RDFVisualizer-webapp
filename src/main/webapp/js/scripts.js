@@ -1240,7 +1240,7 @@ function objectToSubject(resource, depth, showflag, curdepth, pred_pos) {
                             schema_Label_uri : schema_Label_uri,
                             pref_Label_uri : pref_Label_uri,
                             show_incoming_links: show_incoming_links,
-                            parentProperty : parentProperty
+                            parentProperty : Id
                         }, function (response) {
                                               
                             var htmltrob;
