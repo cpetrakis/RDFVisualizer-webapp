@@ -27,7 +27,10 @@
 
 }
 
-
+.sorting_1{
+    max-width: 80ch !important;   overflow:auto;
+    
+}
 
 #myImg{
     width: 25px;
