@@ -257,7 +257,7 @@ Further documentation about the tool functionalities you can find [here](http://
 
 ### 5. Contact ### 
 
-Petrakis Kostas < cpetrakis@ics.forth.gr >
+Petrakis Kostas < petrakis1@gmail.com >
 
 
 
